@@ -1,0 +1,42 @@
+# ==========================================================================
+# .gitignore — Dodera Hermanos Marmolería
+# ==========================================================================
+
+# Variables de entorno y secretos (Nunca subir al repositorio)
+.env
+.env.*
+*.pem
+*.key
+
+# Vercel CLI
+.vercel/
+
+# Dependencias o herramientas locales
+node_modules/
+__pycache__/
+*.pyc
+
+# Archivos temporales de sistema operativo (Windows / macOS / Linux)
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editores e IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Capturas y archivos de prueba temporales en raíz
+render_1440_pass*.png
+*_test.png
+*_zoom*.png
+*_crop*.png
+*.tmp
+*.log

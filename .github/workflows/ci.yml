@@ -1,0 +1,68 @@
+name: Validación de Integridad y Seguridad Web
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify:
+    name: Verificar Estructura, Enlaces y Seguridad
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validar integridad de recursos locales, JSON y Seguridad
+        run: |
+          python3 - << 'EOF'
+          import os, re, json, sys
+
+          # 1. Validar archivos esenciales
+          required_files = [
+              'index.html',
+              'styles.css',
+              'script.js',
+              'vercel.json',
+              'robots.txt',
+              'sitemap.xml',
+              'site.webmanifest',
+              '.well-known/security.txt'
+          ]
+          for f in required_files:
+              assert os.path.exists(f), f"Falta archivo crítico: {f}"
+
+          # 2. Validar sintaxis de vercel.json y site.webmanifest
+          with open('vercel.json', encoding='utf-8') as vf:
+              vdata = json.load(vf)
+              assert 'headers' in vdata, "vercel.json debe incluir cabeceras de seguridad"
+
+          with open('site.webmanifest', encoding='utf-8') as mf:
+              json.load(mf)
+
+          # 3. Verificar que todas las imágenes y recursos referenciados en HTML y CSS existan en disco
+          with open('index.html', encoding='utf-8') as hf:
+              html = hf.read()
+
+          with open('styles.css', encoding='utf-8') as cf:
+              css = cf.read()
+
+          html_assets = re.findall(r'(?:src|href)="(assets/[^"]+)"', html)
+          css_assets = re.findall(r"url\(['\"]?(assets/[^'\")]+)['\"]?\)", css)
+
+          for asset in set(html_assets + css_assets):
+              assert os.path.exists(asset), f"Recurso referenciado no existe en disco: {asset}"
+
+          # 4. Verificar seguridad de enlaces externos (rel="noopener noreferrer" en target="_blank")
+          blank_links = re.findall(r'<a\s+[^>]*target="_blank"[^>]*>', html)
+          for link in blank_links:
+              assert 'noopener' in link and 'noreferrer' in link, f"Enlace externo sin noopener noreferrer: {link}"
+
+          print("Todas las validaciones de estructura, recursos y seguridad pasaron correctamente.")
+          EOF

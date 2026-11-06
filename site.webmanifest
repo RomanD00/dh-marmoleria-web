@@ -1,0 +1,22 @@
+{
+  "name": "Dodera Hermanos Marmolería",
+  "short_name": "DH Marmolería",
+  "description": "Taller de fabricación e instalación a medida de mesadas, islas, revestimientos y escaleras en mármol, granito, cuarzo y sinterizados en CABA y GBA.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121210",
+  "theme_color": "#121210",
+  "lang": "es-AR",
+  "icons": [
+    {
+      "src": "assets/brand/favicon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/brand/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

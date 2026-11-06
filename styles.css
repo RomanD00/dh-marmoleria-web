@@ -1,0 +1,1457 @@
+/* ==========================================================================
+   DH MÁRMOLES — SITIO INSTITUCIONAL
+   Arquitectura CSS Editorial & Minimalista de Alta Gama
+   Diseñado para Viewport 1440px y fácilmente portable a Elementor Pro
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. VARIABLES CSS GLOBALES (Diseño Atómico para Elementor Pro)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Paleta Cromática Exacta extraída del Mockup Aprobado */
+  --color-bg: #F9F8F5;              /* Fondo crema cálido principal */
+  --color-bg-secondary: #F4F3EE;    /* Fondo crema complementario (diferenciales) */
+  --color-bg-card: #FAF9F6;         /* Fondo tarjetas claras */
+  --color-bg-dark: #121210;         /* Fondo oscuro carbón (Hero y Footer) */
+  --color-bg-dark-deep: #0D0E0D;    /* Fondo oscuro técnico (Canal Arquitectos) */
+  
+  --color-text-main: #141312;       /* Texto negro carbón principal */
+  --color-text-muted: #686560;      /* Texto secundario / bajadas claras */
+  --color-text-subtle: #8A857E;     /* Texto sutil / metadatos */
+  
+  --color-text-light: #F9F8F5;      /* Texto blanco roto para fondos oscuros */
+  --color-text-light-muted: #B8B3AC;/* Texto secundario en fondos oscuros */
+  
+  --color-bronze: #9C724E;          /* Acento bronce / terracota exacto */
+  --color-bronze-hover: #B0845E;    /* Hover de botones y acentos */
+  --color-bronze-dark: #805B3B;     /* Sombra o tono profundo de bronce */
+  
+  --border-light: rgba(20, 19, 18, 0.08); /* Líneas divisorias en fondos claros */
+  --border-dark: rgba(255, 255, 255, 0.12); /* Líneas divisorias en fondos oscuros */
+  --border-subtle: rgba(156, 114, 78, 0.25); /* Bordes sutiles bronce */
+
+  /* Tipografía Editorial */
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  /* Contenedores y Medidas */
+  --container-max-width: 1320px;
+  --container-gutter: 24px;
+  --header-height: 90px;
+
+  /* Transiciones Sofisticadas */
+  --transition-fast: 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET & BASE
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  line-height: 1.6;
+  font-weight: 400;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast), opacity var(--transition-fast);
+}
+
+button {
+  border: none;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* --------------------------------------------------------------------------
+   3. UTILIDADES & CONTENEDOR
+   -------------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-gutter);
+  padding-right: var(--container-gutter);
+}
+
+.section-tag {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem; /* 11px */
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-bronze);
+  margin-bottom: 0.75rem;
+}
+
+.section-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1.12;
+  color: var(--color-text-main);
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   4. LOGO DE MARCA (Logo Original Dodera Hermanos Marmolería)
+   -------------------------------------------------------------------------- */
+.brand-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.brand-logo:hover {
+  opacity: 0.9;
+}
+
+.brand-logo-img {
+  height: 72px;
+  width: auto;
+  max-width: 155px;
+  object-fit: contain;
+  display: block;
+}
+
+.footer-logo-img {
+  height: 68px;
+  width: auto;
+  max-width: 145px;
+  object-fit: contain;
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   5. HEADER / NAVEGACIÓN
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  transition: background-color var(--transition-smooth), backdrop-filter var(--transition-smooth);
+}
+
+.site-header.scrolled {
+  position: fixed;
+  background-color: rgba(18, 18, 16, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.main-nav .nav-list {
+  display: flex;
+  align-items: center;
+  gap: 2.25rem;
+}
+
+.main-nav .nav-link {
+  font-size: 0.84rem; /* ~13.5px */
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.02em;
+  padding: 6px 0;
+  position: relative;
+  transition: color var(--transition-fast);
+}
+
+.main-nav .nav-link:hover,
+.main-nav .nav-link.active {
+  color: #FFFFFF;
+}
+
+.main-nav .nav-link .nav-plus {
+  font-size: 0.75rem;
+  margin-left: 2px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.header-action {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Botón Cotizar por WhatsApp (Header) */
+.btn-whatsapp-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background-color: var(--color-bronze);
+  color: #FFFFFF;
+  font-size: 0.8125rem; /* 13px */
+  font-weight: 500;
+  padding: 0.55rem 1.25rem;
+  border-radius: 9999px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-whatsapp-pill:hover {
+  background-color: var(--color-bronze-hover);
+  transform: translateY(-1px);
+}
+
+.btn-whatsapp-pill .icon-whatsapp {
+  width: 16px;
+  height: 16px;
+}
+
+/* Toggle Móvil */
+.mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  z-index: 101;
+}
+
+.mobile-toggle .toggle-bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #FFFFFF;
+  border-radius: 2px;
+  transition: transform var(--transition-smooth), opacity var(--transition-smooth);
+}
+
+/* --------------------------------------------------------------------------
+   6. HERO SECTION (Composición Editorial Cinematográfica)
+   -------------------------------------------------------------------------- */
+.hero-section {
+  position: relative;
+  background-color: var(--color-bg-dark);
+  color: #FFFFFF;
+  padding-top: calc(var(--header-height) + 3rem);
+  padding-bottom: 7.5rem;
+  overflow: hidden;
+  min-height: 680px;
+  display: flex;
+  align-items: center;
+}
+
+/* Fondo Fotográfico Derecho (Obra Real de Dodera Hermanos) */
+.hero-media-backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 54%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-backdrop-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 70% center;
+}
+
+.hero-backdrop-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    var(--color-bg-dark) 0%,
+    rgba(18, 18, 16, 0.92) 15%,
+    rgba(18, 18, 16, 0.35) 45%,
+    rgba(18, 18, 16, 0) 75%
+  ),
+  linear-gradient(
+    to bottom,
+    rgba(18, 18, 16, 0.6) 0%,
+    transparent 20%,
+    transparent 80%,
+    var(--color-bg-dark) 100%
+  );
+}
+
+.hero-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.hero-content {
+  max-width: 560px;
+}
+
+.hero-eyebrow {
+  font-size: 0.6875rem; /* 11px */
+  letter-spacing: 0.28em;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #A39B92;
+  margin-bottom: 1.25rem;
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.8rem, 4.2vw, 3.85rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  color: #FFFFFF;
+  margin-bottom: 1.5rem;
+}
+
+.hero-description {
+  font-size: 0.9375rem; /* 15px */
+  line-height: 1.6;
+  color: #B8B5AF;
+  max-width: 460px;
+  margin-bottom: 2.25rem;
+}
+
+.hero-actions {
+  margin-bottom: 1.75rem;
+}
+
+/* Botón Hero CTA */
+.btn-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background-color: var(--color-bronze);
+  color: #FFFFFF;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.8rem 1.8rem;
+  border-radius: 9999px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-hero-cta:hover {
+  background-color: var(--color-bronze-hover);
+  transform: translateY(-1px);
+}
+
+.btn-hero-cta .icon-whatsapp {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-hero-cta .btn-arrow {
+  font-size: 1.15rem;
+  line-height: 1;
+  transition: transform var(--transition-fast);
+}
+
+.btn-hero-cta:hover .btn-arrow {
+  transform: translateX(3px);
+}
+
+/* Badge de Ubicación */
+.hero-badge-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #DDD8D0;
+}
+
+.hero-badge-location .icon-pin {
+  width: 15px;
+  height: 15px;
+  color: var(--color-bronze);
+}
+
+/* Curva Orgánica Inferior (Fiel al Mockup Aprobado) */
+.hero-wave-divider {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  line-height: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.hero-wave-divider svg {
+  display: block;
+  width: 100%;
+  height: 95px;
+}
+
+/* --------------------------------------------------------------------------
+   7. CATÁLOGOS ("Materiales y productos para tu espacio")
+   -------------------------------------------------------------------------- */
+.catalogo-section {
+  background-color: var(--color-bg);
+  padding: 5.5rem 0 5rem;
+  position: relative;
+  background-image: url('assets/textures/marble-vein-subtle.jpg');
+  background-repeat: no-repeat;
+  background-position: left 18%;
+  background-size: 140px auto;
+}
+
+.catalogo-container {
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  gap: 3.5rem;
+  align-items: flex-start;
+}
+
+.catalogo-intro {
+  padding-top: 1rem;
+}
+
+.catalogo-intro .section-lead {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  max-width: 290px;
+}
+
+/* Grid de Tarjetas */
+.catalogo-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.65fr; /* 2 tarjetas estrechas + 1 ancha */
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+/* Tarjeta de Catálogo */
+.catalogo-card {
+  position: relative;
+  background-color: #121210;
+  border-radius: 48px 48px 24px 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 385px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.catalogo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.14);
+}
+
+.catalogo-card-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.catalogo-card-media .card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.catalogo-card:hover .catalogo-card-media .card-img {
+  transform: scale(1.04);
+}
+
+.catalogo-card-media .card-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(18, 18, 16, 0) 45%,
+    rgba(18, 18, 16, 0.5) 70%,
+    rgba(18, 18, 16, 0.98) 90%,
+    #121210 100%
+  );
+}
+
+.catalogo-card-content {
+  position: relative;
+  z-index: 2;
+  padding: 1.35rem 1.4rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.card-num {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #FFFFFF;
+  opacity: 0.85;
+}
+
+.card-title {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+}
+
+/* Botón Circular con Flecha */
+.card-circle-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: var(--color-bronze);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.card-circle-btn .arrow-glyph {
+  font-size: 1.15rem;
+  line-height: 1;
+  transition: transform var(--transition-fast);
+}
+
+.catalogo-card:hover .card-circle-btn {
+  background-color: var(--color-bronze-hover);
+  transform: scale(1.08);
+}
+
+.catalogo-card:hover .arrow-glyph {
+  transform: translateX(2px);
+}
+
+/* --------------------------------------------------------------------------
+   8. DIFERENCIALES (Franja de 4 Elementos)
+   -------------------------------------------------------------------------- */
+.diferenciales-section {
+  background-color: var(--color-bg-secondary);
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  padding: 3rem 0;
+}
+
+.diferenciales-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.diferencial-item {
+  padding: 0.5rem 1.75rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.15rem;
+}
+
+.diferencial-item:not(:last-child) {
+  border-right: 1px solid var(--border-light);
+}
+
+.diferencial-icon-wrap {
+  flex-shrink: 0;
+  color: var(--color-bronze);
+  margin-top: 2px;
+}
+
+.diferencial-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.diferencial-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.diferencial-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--color-text-main);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.diferencial-text {
+  font-size: 0.775rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   9. CANAL EXCLUSIVO PARA ARQUITECTOS Y DISEÑADORES
+   -------------------------------------------------------------------------- */
+.arquitectos-section {
+  position: relative;
+  background-color: var(--color-bg-dark-deep);
+  color: #FFFFFF;
+  padding: 5.5rem 0;
+  overflow: hidden;
+  background-image: 
+    radial-gradient(circle at 15% 40%, rgba(156, 114, 78, 0.08) 0%, transparent 60%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 64px 64px, 64px 64px;
+}
+
+.arquitectos-container {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  align-items: center;
+  gap: 4rem;
+  position: relative;
+  z-index: 2;
+}
+
+.badge-pill {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-light-muted);
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.35rem 0.9rem;
+  border-radius: 9999px;
+  margin-bottom: 1.25rem;
+}
+
+.arquitectos-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: #FFFFFF;
+  margin-bottom: 1.25rem;
+}
+
+.arquitectos-lead {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-text-light-muted);
+  max-width: 490px;
+  margin-bottom: 2rem;
+}
+
+/* Lista de 3 Beneficios */
+.beneficios-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+  margin-bottom: 2.5rem;
+}
+
+.beneficio-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.check-icon-wrap {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  color: var(--color-bronze);
+  margin-top: 2px;
+}
+
+.check-icon-wrap svg {
+  width: 100%;
+  height: 100%;
+}
+
+.beneficio-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.beneficio-title {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.beneficio-desc {
+  font-size: 0.8125rem;
+  color: var(--color-text-light-muted);
+  line-height: 1.45;
+}
+
+/* Fila CTA + Garantía */
+.arquitectos-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.btn-arquitectos-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background-color: var(--color-bronze);
+  color: #FFFFFF;
+  font-size: 0.84rem;
+  font-weight: 500;
+  padding: 0.75rem 1.6rem;
+  border-radius: 9999px;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-arquitectos-cta:hover {
+  background-color: var(--color-bronze-hover);
+  transform: translateY(-1px);
+}
+
+.btn-arquitectos-cta .icon-whatsapp {
+  width: 17px;
+  height: 17px;
+}
+
+.btn-arquitectos-cta .btn-arrow {
+  font-size: 1.1rem;
+  transition: transform var(--transition-fast);
+}
+
+.btn-arquitectos-cta:hover .btn-arrow {
+  transform: translateX(3px);
+}
+
+.tag-garantia {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.625rem; /* 10px */
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.4;
+}
+
+/* Columna Derecha: Fotografía Planos */
+.arquitectos-media {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.blueprint-photo-frame {
+  width: 100%;
+  max-width: 580px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 52px rgba(0, 0, 0, 0.55);
+}
+
+.blueprint-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   10. OBRAS DESTACADAS
+   -------------------------------------------------------------------------- */
+.obras-section {
+  background-color: var(--color-bg);
+  padding: 5.5rem 0 4.5rem;
+  position: relative;
+  background-image: url('assets/textures/marble-vein-subtle.jpg');
+  background-repeat: no-repeat;
+  background-position: left 25%;
+  background-size: 120px auto;
+}
+
+.obras-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 3.5rem;
+  align-items: flex-start;
+}
+
+.obras-intro {
+  padding-top: 0.75rem;
+}
+
+.obras-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.obra-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.obra-media {
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.obra-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.obra-card:hover .obra-img {
+  transform: scale(1.04);
+}
+
+.obra-info {
+  padding-top: 0.85rem;
+}
+
+.obra-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--color-text-main);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.25rem;
+}
+
+.obra-specs {
+  font-size: 0.775rem;
+  color: var(--color-text-subtle);
+}
+
+/* --------------------------------------------------------------------------
+   11. VIDA EN EL TALLER / INSTAGRAM
+   -------------------------------------------------------------------------- */
+.taller-section {
+  background-color: var(--color-bg);
+  padding: 3.5rem 0 4.5rem;
+}
+
+.taller-container {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.taller-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.instagram-brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--color-text-main);
+  transition: color var(--transition-fast);
+}
+
+.instagram-brand-link:hover {
+  color: var(--color-bronze);
+}
+
+.icon-instagram {
+  width: 30px;
+  height: 30px;
+}
+
+.instagram-handle {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.taller-desc {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+}
+
+.taller-photos-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.taller-photo-item {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+}
+
+.taller-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.taller-photo-item:hover .taller-img {
+  transform: scale(1.05);
+}
+
+/* --------------------------------------------------------------------------
+   12. PREGUNTAS FRECUENTES (Acordeón Minimalista)
+   -------------------------------------------------------------------------- */
+.faq-section {
+  background-color: var(--color-bg);
+  padding: 4.5rem 0 5.5rem;
+  position: relative;
+  background-image: url('assets/textures/marble-vein-subtle.jpg');
+  background-repeat: no-repeat;
+  background-position: left 30%;
+  background-size: 140px auto;
+}
+
+.faq-container {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 4rem;
+  align-items: flex-start;
+}
+
+.faq-intro {
+  padding-top: 0.5rem;
+}
+
+.faq-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--color-text-main);
+  margin-bottom: 1rem;
+}
+
+.faq-lead {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  max-width: 290px;
+}
+
+.faq-accordion {
+  border-top: 1px solid var(--border-light);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border-light);
+}
+
+.faq-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.35rem 0;
+  text-align: left;
+  transition: color var(--transition-fast);
+}
+
+.faq-question {
+  font-family: var(--font-serif);
+  font-size: 1.18rem;
+  font-weight: 500;
+  color: var(--color-text-main);
+  padding-right: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+.faq-trigger:hover .faq-question {
+  color: var(--color-bronze);
+}
+
+.faq-icon {
+  font-size: 1.35rem;
+  line-height: 1;
+  font-weight: 300;
+  color: var(--color-text-main);
+  transition: transform var(--transition-smooth), color var(--transition-fast);
+}
+
+.faq-trigger[aria-expanded="true"] .faq-icon {
+  transform: rotate(45deg);
+  color: var(--color-bronze);
+}
+
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--transition-smooth);
+}
+
+.faq-panel:not([hidden]) {
+  display: grid;
+}
+
+.faq-panel.is-open {
+  grid-template-rows: 1fr;
+}
+
+.faq-panel-inner {
+  overflow: hidden;
+}
+
+.faq-panel-inner p {
+  padding-bottom: 1.35rem;
+  font-size: 0.84rem;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   13. FOOTER (5 Columnas y Textura Sutil de Piedra)
+   -------------------------------------------------------------------------- */
+.site-footer {
+  background-color: var(--color-bg-dark);
+  color: #FFFFFF;
+  padding: 4.5rem 0 2rem;
+  position: relative;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-columns {
+  display: grid;
+  grid-template-columns: 1.4fr 0.9fr 1.3fr 1fr 0.8fr;
+  align-items: center;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-col {
+  padding: 0 1.5rem;
+}
+
+.footer-col:first-child {
+  padding-left: 0;
+}
+
+.footer-col:last-child {
+  padding-right: 0;
+}
+
+.footer-col:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Columna 1: Marca */
+.footer-brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.footer-logo {
+  flex-shrink: 0;
+}
+
+.footer-brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.brand-corp-name {
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+
+.brand-slogan {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Columna 2: Ubicación */
+.footer-location-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-location-item .icon-pin {
+  width: 18px;
+  height: 18px;
+  color: #FFFFFF;
+}
+
+.location-text {
+  font-size: 0.775rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+
+/* Columna 3: Contacto WhatsApp */
+.footer-whatsapp-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: opacity var(--transition-fast);
+}
+
+.footer-whatsapp-link:hover {
+  opacity: 0.85;
+}
+
+.icon-whatsapp-footer {
+  width: 22px;
+  height: 22px;
+  color: #FFFFFF;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.35;
+}
+
+.contact-phone {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.contact-action {
+  font-size: 0.725rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Columna 4: Enlaces Footer */
+.footer-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.footer-nav-link {
+  font-size: 0.7875rem;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color var(--transition-fast);
+}
+
+.footer-nav-link:hover {
+  color: #FFFFFF;
+}
+
+/* Columna 5: Redes Sociales */
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.social-icon-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.social-icon-btn:hover {
+  color: var(--color-bronze);
+  transform: translateY(-2px);
+}
+
+.social-icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Fila Inferior: Copyright */
+.footer-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.legal-links {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.legal-link {
+  color: rgba(255, 255, 255, 0.5);
+  transition: color var(--transition-fast);
+}
+
+.legal-link:hover {
+  color: #FFFFFF;
+}
+
+.legal-sep {
+  opacity: 0.3;
+}
+
+/* --------------------------------------------------------------------------
+   14. RESPONSIVE DESIGN (Desktop 1440px -> Tablet -> Mobile)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1200px) {
+  .hero-container {
+    gap: 2rem;
+  }
+
+  .catalogo-container {
+    grid-template-columns: 260px 1fr;
+    gap: 2rem;
+  }
+
+  .catalogo-cards-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .catalogo-card.card-wide {
+    grid-column: span 2;
+  }
+
+  .footer-columns {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .footer-col {
+    border-right: none !important;
+    padding: 0;
+  }
+}
+
+@media (max-width: 992px) {
+  .hero-section {
+    flex-direction: column;
+    padding-top: calc(var(--header-height) + 1.5rem);
+    padding-bottom: 6rem;
+  }
+
+  .hero-media-backdrop {
+    position: relative;
+    width: 100%;
+    height: 340px;
+    margin-bottom: 2rem;
+  }
+
+  .hero-backdrop-img {
+    border-radius: 16px;
+  }
+
+  .hero-backdrop-gradient {
+    display: none;
+  }
+
+  .hero-container {
+    padding-top: 0;
+  }
+
+  .diferenciales-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .diferencial-item {
+    border-right: none !important;
+    padding: 0;
+  }
+
+  .arquitectos-container {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .obras-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .obras-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .taller-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .taller-photos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .faq-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-height: 68px;
+  }
+
+  .brand-logo-img {
+    height: 52px;
+    max-width: 120px;
+  }
+
+  /* Menú Móvil Desplegable */
+  .mobile-toggle {
+    display: flex;
+  }
+
+  .main-nav {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    width: 100%;
+    background-color: rgba(18, 18, 16, 0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 2rem var(--container-gutter);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateY(-120%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform var(--transition-smooth), opacity var(--transition-smooth);
+    z-index: 99;
+  }
+
+  .main-nav.is-active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .main-nav .nav-list {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .main-nav .nav-link {
+    font-size: 1.15rem;
+  }
+
+  .catalogo-container {
+    grid-template-columns: 1fr;
+  }
+
+  .catalogo-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .catalogo-card.card-wide {
+    grid-column: span 1;
+  }
+
+  .diferenciales-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .obras-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-columns {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .footer-bottom-row {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   15. ACCESIBILIDAD & REDUCED MOTION
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-bronze);
+  outline-offset: 3px;
+}
