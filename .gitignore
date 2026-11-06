@@ -44,5 +44,6 @@ render_1440_pass*.png
 *_test.png
 *_zoom*.png
 *_crop*.png
+lighthouse-*
 *.tmp
 *.log

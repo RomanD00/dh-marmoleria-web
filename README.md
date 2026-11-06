@@ -62,13 +62,14 @@ dodera-hermanos-web/
 │   │   ├── ObrasSection.astro  # Grid de proyectos
 │   │   ├── TallerSection.astro # Grid de procesos de taller (@DH.MARMOLERIA)
 │   │   └── FaqSection.astro    # Acordeón accesible de consultas frecuentes
-│   ├── pages/                  # Rutas estáticas generadas por Astro
-│   │   ├── index.astro         # / (Homepage idéntica al diseño aprobado)
-│   │   ├── materiales.astro    # /materiales (Catálogo de mármol, granito, cuarzo y sinterizados)
-│   │   ├── piletas-y-bachas.astro # /piletas-y-bachas (Bachas armadas a medida y acero Johnson/Neue)
-│   │   ├── mesas-de-arrime.astro  # /mesas-de-arrime (Consolas y mesas en piedra y hierro)
-│   │   ├── galeria.astro       # /galeria (Portafolio completo y fotos de taller)
-│   │   └── contacto.astro      # /contacto (Canal directo WhatsApp y pasos de trabajo)
+│   ├── pages/                  # Rutas estáticas activas en producción
+│   │   └── index.astro         # / (Homepage aprobada; ÚNICA ruta compilada e indexada)
+│   ├── pages-draft/            # Rutas en revisión EXCLUIDAS del build y sitemap
+│   │   ├── materiales.astro    # Pendiente de arquitectura 2x2
+│   │   ├── piletas-y-bachas.astro # Pendiente de grilla con filtros (Todas/Johnson/Neue)
+│   │   ├── mesas-de-arrime.astro  # Pendiente de grilla editorial sin filtros
+│   │   ├── galeria.astro       # Pendiente de portafolio fotográfico confirmado
+│   │   └── contacto.astro      # Pendiente de validación de canales comerciales
 │   └── styles/
 │       └── global.css          # CSS global con todos los tokens, tipografías y reglas responsive
 │
@@ -161,7 +162,51 @@ npm run preview
 
 ## 5. Pruebas y Control de Calidad
 
-- **Build estático:** 6 rutas compiladas en menos de 1 segundo.
-- **Diferencia visual vs diseño original:** `0.000 / 255.0` (fidelidad 100% matemática en 1440, 768 y 390 px).
-- **Core Web Vitals:** 0 KB de librerías innecesarias de JS (sin React, Vue ni Tailwind); JavaScript vanilla nativo de 4.9 KB; carga asíncrona de recursos; `fetchpriority="high"` en imágenes críticas y `loading="lazy"` en resto.
-- **SEO y Schema.org:** `HomeAndConstructionBusiness`, `FAQPage` y `BreadcrumbList` integrados en JSON-LD; sitemap automático en `/sitemap-index.xml`; Open Graph verificado para WhatsApp y redes.
+- **Build de producción activo:** 1 única ruta aprobada (`/`) compilada en ~500 ms; páginas en borrador aisladas en `src/pages-draft/`.
+- **Fidelidad visual comprobada vs baseline vanilla:** Diferencia media de `0.000 / 255.0` en tablet (768 px) y móvil (390 px), y `0.030 / 255.0` en desktop (1440 px) por renderizado subpíxel del glyph `+`.
+- **Resultados Lighthouse (Build de producción):**
+  - **Desktop:** Rendimiento 99/100, Accesibilidad 96/100, Mejores Prácticas 100/100, SEO 100/100. LCP: 0.9 s, CLS: 0.008, TBT: 0 ms.
+  - **Mobile:** Rendimiento 86/100, Accesibilidad 96/100, Mejores Prácticas 100/100, SEO 100/100. CLS: 0.001, TBT: 0 ms, LCP: 4.2 s (bajo emulación móvil de red lenta por peso del JPEG principal de 140 KB).
+- **SEO y Schema.org:** `HomeAndConstructionBusiness` y `FAQPage` integrados en JSON-LD; sitemap automático en `/sitemap-index.xml` conteniendo únicamente la URL aprobada; Open Graph verificado para WhatsApp y redes sociales.
+
+---
+
+## 6. Arquitectura Confirmada de Catálogos (Próxima Etapa)
+
+Decisiones estructurales acordadas para el desarrollo futuro de las páginas de catálogo (actualmente no diseñadas y excluidas del build):
+
+1. **Materiales (`/materiales`):**
+   - Disposición en **4 tarjetas en grilla 2×2**, una por cada familia de piedra:
+     1. Mármol Natural
+     2. Granito Natural
+     3. Cuarzo
+     4. Superficies Sinterizadas
+   - Cada tarjeta funcionará como portal de entrada hacia **futuras páginas de detalle** específicas de cada material.
+2. **Piletas y Bachas (`/piletas-y-bachas`):**
+   - Presentación de **todos los modelos en una grilla unificada**.
+   - Barra de filtros interactiva accesible (JavaScript Vanilla, sin frameworks):
+     - `Todas`
+     - `Johnson` (Línea de piletas de acero inoxidable)
+     - `Neue` (Línea de piletas de acero inoxidable)
+     - *(Bachas armadas en piedra natural se integrarán según especificación final)*.
+3. **Mesas de Arrime (`/mesas-de-arrime`):**
+   - Presentación en **grilla editorial de modelos**.
+   - **Sin filtros ni subdivisiones**, manteniendo una navegación visual fluida y directa.
+
+---
+
+## 7. Relevamiento de Datos Comerciales y Contenidos Pendientes de Confirmación
+
+Antes de redactar o publicar información comercial definitiva, se documenta el estado de confirmación con la clienta:
+
+| Elemento | Estado Actual | Fuente / Observaciones |
+|---|---|---|
+| **Teléfono / WhatsApp** | **Confirmado:** `+54 11 2824-2848` (`1128242848`) | Confirmado en briefing por el titular (Dodera Ezequiel Maximiliano). El número `+54 11 2346-2348` del mockup original era dummy y fue descartado. |
+| **Nombre de Marca** | **Confirmado:** «Dodera Hermanos Marmolería» / «DH Mármoles» | Coincide en briefing, redes y logotipo original. |
+| **Cobertura Geográfica** | **Confirmado:** «CABA y GBA» | Confirmado en briefing y aprobado en el hero y footer. |
+| **Dirección de Taller / Local** | **No confirmado / Sin atención al público** | La clienta no informó dirección física. No inventar domicilio ni horarios. No colocar «Atención con coordinación previa». |
+| **Correo Electrónico** | **Pendiente de confirmación pública** | En el briefing figura `villordotrinidad0603@gmail.com` catalogado expresamente como *Email de facturación*. No se ha confirmado si habrá un mail de contacto institucional. |
+| **Modelos de Piletas** | **Marcas confirmadas (Johnson y Neue); Modelos pendientes** | Se conocen las marcas, pero falta el listado exacto de modelos, códigos y precios que comercializa el taller. |
+| **Fotografías de Catálogo** | **Foto de Hero confirmada; resto provisional** | La foto de la isla Calacatta en el hero es obra real aprobada. Las fotos de piletas, mesas, baño y quincho provienen del mockup original y deben ser validadas o reemplazadas por obras de Dodera Hermanos cuando la clienta las suministre. |
+| **Fichas Técnicas** | **Familias confirmadas; detalles técnicos pendientes** | Las 4 familias de materiales están confirmadas. Los espesores exactos, marcas de sinterizados (Dekton, Neolith) o cuarzos (Purastone, Silestone) y garantías deben ser validados formalmente. |
+

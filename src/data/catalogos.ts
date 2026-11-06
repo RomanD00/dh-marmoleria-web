@@ -6,6 +6,8 @@
  * ==========================================================================
  */
 
+import { getWhatsAppUrl } from '../config/site';
+
 export interface CatalogHomeCard {
   num: string;
   title: string;
@@ -26,7 +28,7 @@ export const CATALOG_HOME_CARDS: CatalogHomeCard[] = [
     title: 'Materiales',
     image: '/assets/catalogos/01-materiales.jpg',
     imageAlt: 'Muestrario de materiales: mármol, granito, cuarzo y sinterizados',
-    href: '/materiales',
+    href: getWhatsAppUrl('Hola Dodera Hermanos Marmolería, quisiera conocer el catálogo de Materiales.'),
     whatsappMessage: 'Hola Dodera Hermanos Marmolería, quisiera conocer el catálogo de Materiales.',
     isWide: false
   },
@@ -35,7 +37,7 @@ export const CATALOG_HOME_CARDS: CatalogHomeCard[] = [
     title: 'Piletas',
     image: '/assets/catalogos/02-piletas.jpg',
     imageAlt: 'Pileta y bacha armada e integrada en mármol con escurridor acanalado',
-    href: '/piletas-y-bachas',
+    href: getWhatsAppUrl('Hola Dodera Hermanos Marmolería, quisiera conocer el catálogo de Piletas.'),
     whatsappMessage: 'Hola Dodera Hermanos Marmolería, quisiera conocer el catálogo de Piletas.',
     isWide: false
   },
@@ -44,7 +46,7 @@ export const CATALOG_HOME_CARDS: CatalogHomeCard[] = [
     title: 'Mesas de Arrime',
     image: '/assets/catalogos/03-mesas-arrime.jpg',
     imageAlt: 'Mesa de arrime de diseño con tapa maciza de mármol y base de hierro negro',
-    href: '/mesas-de-arrime',
+    href: getWhatsAppUrl('Hola Dodera Hermanos Marmolería, quisiera conocer el catálogo de Mesas de Arrime.'),
     whatsappMessage: 'Hola Dodera Hermanos Marmolería, quisiera conocer el catálogo de Mesas de Arrime.',
     isWide: true
   }

@@ -39,11 +39,6 @@ jobs:
           # 1. Validar archivos esenciales en dist/
           required_dist = [
               'dist/index.html',
-              'dist/materiales/index.html',
-              'dist/piletas-y-bachas/index.html',
-              'dist/mesas-de-arrime/index.html',
-              'dist/galeria/index.html',
-              'dist/contacto/index.html',
               'dist/robots.txt',
               'dist/sitemap-index.xml',
               'dist/site.webmanifest',

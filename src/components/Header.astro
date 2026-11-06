@@ -1,14 +1,11 @@
 ---
 import { SITE_CONFIG, MAIN_NAV, getWhatsAppUrl } from '../config/site';
-
-const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
-const isCatalogRoute = ['/materiales', '/piletas-y-bachas', '/mesas-de-arrime'].includes(currentPath);
 ---
 
 <header class="site-header" id="header">
   <div class="container header-container">
     <!-- Logo Original Dodera Hermanos Marmolería -->
-    <a href="/" class="brand-logo" aria-label={`${SITE_CONFIG.name} - Ir al inicio`}>
+    <a href="#hero" class="brand-logo" aria-label={`${SITE_CONFIG.name} - Ir al inicio`}>
       <img
         src={SITE_CONFIG.logoWhite}
         alt={SITE_CONFIG.name}
@@ -23,45 +20,14 @@ const isCatalogRoute = ['/materiales', '/piletas-y-bachas', '/mesas-de-arrime'].
     <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
       <ul class="nav-list">
         {
-          MAIN_NAV.map((item) => {
-            const isActive = item.children
-              ? isCatalogRoute
-              : currentPath === item.href;
-
-            if (item.children) {
-              return (
-                <li class="nav-item has-dropdown">
-                  <a
-                    href={item.href}
-                    class:list={['nav-link', { active: isActive }]}
-                    aria-haspopup="true"
-                  >
-                    {item.label} <span class="nav-plus">+</span>
-                  </a>
-                  <div class="nav-dropdown" role="menu" aria-label="Submenú de Catálogos">
-                    {item.children.map((sub) => (
-                      <a
-                        href={sub.href}
-                        role="menuitem"
-                        class:list={['nav-dropdown-link', { active: currentPath === sub.href }]}
-                      >
-                        <span class="nav-dropdown-title">{sub.label}</span>
-                        <span class="nav-dropdown-desc">{sub.description}</span>
-                      </a>
-                    ))}
-                  </div>
-                </li>
-              );
-            }
-
-            return (
-              <li class="nav-item">
-                <a href={item.href} class:list={['nav-link', { active: isActive }]}>
-                  {item.label}
-                </a>
-              </li>
-            );
-          })
+          MAIN_NAV.map((item, idx) => (
+            <li class="nav-item">
+              <a href={item.href} class:list={['nav-link', { active: idx === 0 }]}>
+                {item.label}
+                {item.hasPlus && <span class="nav-plus">+</span>}
+              </a>
+            </li>
+          ))
         }
       </ul>
     </nav>

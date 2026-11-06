@@ -39,50 +39,48 @@ export function getWhatsAppUrl(customMessage?: string): string {
   return `https://wa.me/${SITE_CONFIG.contact.whatsappNumber}?text=${text}`;
 }
 
-export interface NavSubItem {
-  label: string;
-  href: string;
-  description: string;
-}
-
 export interface NavItem {
   label: string;
   href: string;
-  children?: NavSubItem[];
+  hasPlus?: boolean;
 }
 
+/**
+ * Navegación principal aprobada de la Homepage.
+ * Mientras las páginas internas estén en revisión/borrador, las anclas
+ * dirigen a las secciones correspondientes de la portada aprobada.
+ */
 export const MAIN_NAV: NavItem[] = [
   {
     label: 'Inicio',
-    href: '/'
+    href: '#hero'
   },
   {
     label: 'Catálogo',
-    href: '/materiales',
-    children: [
-      {
-        label: '01. Materiales',
-        href: '/materiales',
-        description: 'Mármol, granito, cuarzo y superficies sinterizadas'
-      },
-      {
-        label: '02. Piletas y Bachas',
-        href: '/piletas-y-bachas',
-        description: 'Bachas armadas a medida y acero inoxidable'
-      },
-      {
-        label: '03. Mesas de Arrime',
-        href: '/mesas-de-arrime',
-        description: 'Mesas y consolas en piedra natural y hierro'
-      }
-    ]
+    href: '#catalogos',
+    hasPlus: true
   },
   {
     label: 'Galería',
-    href: '/galeria'
+    href: '#obras'
   },
   {
     label: 'Contacto',
-    href: '/contacto'
+    href: '#contacto'
   }
 ];
+
+/**
+ * Plan de arquitectura de rutas futuras para cuando la clienta apruebe
+ * el diseño y contenido definitivo de cada sección:
+ * - /materiales (4 tarjetas 2x2: Mármol, Granito, Cuarzo, Sinterizado + futuras páginas de detalle)
+ * - /piletas-y-bachas (grilla unificada con filtros: Todas, Johnson, Neue)
+ * - /mesas-de-arrime (grilla editorial de modelos sin filtros)
+ * - /galeria (portafolio completo de obras reales y taller)
+ * - /contacto (formulario/atención a estudios y particulares)
+ */
+export const FUTURE_CATALOG_ROUTES = [
+  { label: '01. Materiales', href: '/materiales' },
+  { label: '02. Piletas y Bachas', href: '/piletas-y-bachas' },
+  { label: '03. Mesas de Arrime', href: '/mesas-de-arrime' }
+] as const;
