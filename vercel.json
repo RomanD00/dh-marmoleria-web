@@ -3,6 +3,33 @@
   "name": "dodera-hermanos-marmoleria",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "/sitemap-index.xml",
+      "permanent": true
+    },
+    {
+      "source": "/catalogos",
+      "destination": "/materiales",
+      "permanent": true
+    },
+    {
+      "source": "/piletas",
+      "destination": "/piletas-y-bachas",
+      "permanent": true
+    },
+    {
+      "source": "/mesas",
+      "destination": "/mesas-de-arrime",
+      "permanent": true
+    },
+    {
+      "source": "/obras",
+      "destination": "/galeria",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -14,10 +41,6 @@
         {
           "key": "X-Frame-Options",
           "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
         },
         {
           "key": "Referrer-Policy",
@@ -38,7 +61,7 @@
       ]
     },
     {
-      "source": "/assets/(.*)",
+      "source": "/_astro/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -47,7 +70,16 @@
       ]
     },
     {
-      "source": "/(styles\\.css|script\\.js)",
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/scripts/(.*)",
       "headers": [
         {
           "key": "Cache-Control",

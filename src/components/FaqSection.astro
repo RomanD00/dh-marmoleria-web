@@ -1,0 +1,53 @@
+---
+import { FAQ_ITEMS } from '../data/faqs';
+---
+
+<section class="faq-section" id="faq">
+  <div class="container faq-container">
+    <!-- Columna Izquierda: Título y Bajada -->
+    <div class="faq-intro">
+      <p class="section-tag">06. PREGUNTAS FRECUENTES</p>
+      <h2 class="faq-heading">
+        Consultas<br />
+        frecuentes.
+      </h2>
+      <p class="faq-lead">
+        Respondemos las dudas más comunes sobre materiales, medición, plazos y cuidados.
+      </p>
+    </div>
+
+    <!-- Columna Derecha: Acordeón Funcional Vanilla JS -->
+    <div class="faq-accordion" id="faqAccordion">
+      {
+        FAQ_ITEMS.map((faq, index) => {
+          const btnId = `faq-btn-${index + 1}`;
+          const ansId = `faq-ans-${index + 1}`;
+          return (
+            <div class="faq-item">
+              <button
+                class="faq-trigger"
+                id={btnId}
+                aria-expanded="false"
+                aria-controls={ansId}
+              >
+                <span class="faq-question">{faq.question}</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div
+                class="faq-panel"
+                id={ansId}
+                role="region"
+                aria-labelledby={btnId}
+                hidden
+              >
+                <div class="faq-panel-inner">
+                  <p>{faq.answer}</p>
+                </div>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>

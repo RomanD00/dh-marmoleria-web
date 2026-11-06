@@ -1,0 +1,125 @@
+---
+import { SITE_CONFIG } from '../config/site';
+import { FAQ_ITEMS } from '../data/faqs';
+
+export interface BreadcrumbItem {
+  name: string;
+  path: string;
+}
+
+export interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  ogImage?: string;
+  includeFaqSchema?: boolean;
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const {
+  title,
+  description,
+  canonicalPath = Astro.url.pathname,
+  ogImage = SITE_CONFIG.ogImage,
+  includeFaqSchema = false,
+  breadcrumbs = []
+} = Astro.props;
+
+const cleanPath = canonicalPath === '/' ? '/' : canonicalPath.replace(/\/$/, '');
+const canonicalUrl = new URL(cleanPath, SITE_CONFIG.url).toString();
+const fullOgImageUrl = new URL(ogImage, SITE_CONFIG.url).toString();
+
+const businessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HomeAndConstructionBusiness',
+  '@id': `${SITE_CONFIG.url}/#business`,
+  name: SITE_CONFIG.name,
+  alternateName: SITE_CONFIG.shortName,
+  description:
+    'Taller de fabricación e instalación a medida de mesadas, islas, revestimientos, piletas y mesas de arrime en mármol, granito, cuarzo y superficies sinterizadas.',
+  url: SITE_CONFIG.url,
+  image: fullOgImageUrl,
+  logo: new URL(SITE_CONFIG.logoWhite, SITE_CONFIG.url).toString(),
+  telephone: SITE_CONFIG.contact.phoneSchema,
+  areaServed: [
+    { '@type': 'City', name: 'Ciudad Autónoma de Buenos Aires' },
+    { '@type': 'AdministrativeArea', name: 'Gran Buenos Aires' }
+  ],
+  sameAs: [SITE_CONFIG.social.instagramUrl, SITE_CONFIG.social.facebookUrl]
+};
+
+const faqSchema = includeFaqSchema
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: FAQ_ITEMS.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer
+        }
+      }))
+    }
+  : null;
+
+const breadcrumbSchema =
+  breadcrumbs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((crumb, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: crumb.name,
+          item: new URL(crumb.path === '/' ? '/' : crumb.path.replace(/\/$/, ''), SITE_CONFIG.url).toString()
+        }))
+      }
+    : null;
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="theme-color" content="#121210" />
+<meta name="robots" content="index, follow" />
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Favicons & Web App Manifest -->
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/favicon.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+<!-- Open Graph / WhatsApp / Redes Sociales -->
+<meta property="og:type" content="website" />
+<meta property="og:locale" content={SITE_CONFIG.locale} />
+<meta property="og:site_name" content={SITE_CONFIG.name} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={fullOgImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={fullOgImageUrl} />
+
+<!-- Google Fonts: Editorial Serif + Clean Sans-serif -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
+
+<!-- Schema.org Datos Estructurados (SEO Local Verificado) -->
+<script type="application/ld+json" is:inline set:html={JSON.stringify(businessSchema)} />
+{faqSchema && <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />}
+{breadcrumbSchema && <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbSchema)} />}

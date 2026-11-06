@@ -1,0 +1,25 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Hero from '../components/Hero.astro';
+import CatalogSection from '../components/CatalogSection.astro';
+import DiferencialesSection from '../components/DiferencialesSection.astro';
+import ArquitectosSection from '../components/ArquitectosSection.astro';
+import ObrasSection from '../components/ObrasSection.astro';
+import TallerSection from '../components/TallerSection.astro';
+import FaqSection from '../components/FaqSection.astro';
+---
+
+<MainLayout
+  title="Dodera Hermanos Marmolería | Taller de Piedra a Medida en Buenos Aires"
+  description="Dodera Hermanos Marmolería: Fabricación e instalación a medida de mesadas, islas, revestimientos, piletas y escaleras en mármol, granito, cuarzo y sinterizados. Cobertura en CABA y GBA."
+  canonicalPath="/"
+  includeFaqSchema={true}
+>
+  <Hero />
+  <CatalogSection />
+  <DiferencialesSection />
+  <ArquitectosSection />
+  <ObrasSection />
+  <TallerSection />
+  <FaqSection />
+</MainLayout>

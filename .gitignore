@@ -1,6 +1,13 @@
 # ==========================================================================
-# .gitignore — Dodera Hermanos Marmolería
+# .gitignore — Dodera Hermanos Marmolería (Astro SSG + Vercel)
 # ==========================================================================
+
+# Salida de compilación Astro y caché de tipos
+dist/
+.astro/
+
+# Dependencias Node.js
+node_modules/
 
 # Variables de entorno y secretos (Nunca subir al repositorio)
 .env
@@ -11,8 +18,7 @@
 # Vercel CLI
 .vercel/
 
-# Dependencias o herramientas locales
-node_modules/
+# Python / utilidades locales
 __pycache__/
 *.pyc
 

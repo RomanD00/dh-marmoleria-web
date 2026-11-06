@@ -1,0 +1,109 @@
+---
+import { SITE_CONFIG, MAIN_NAV, getWhatsAppUrl } from '../config/site';
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCatalogRoute = ['/materiales', '/piletas-y-bachas', '/mesas-de-arrime'].includes(currentPath);
+---
+
+<header class="site-header" id="header">
+  <div class="container header-container">
+    <!-- Logo Original Dodera Hermanos Marmolería -->
+    <a href="/" class="brand-logo" aria-label={`${SITE_CONFIG.name} - Ir al inicio`}>
+      <img
+        src={SITE_CONFIG.logoWhite}
+        alt={SITE_CONFIG.name}
+        class="brand-logo-img"
+        width="114"
+        height="72"
+        fetchpriority="high"
+      />
+    </a>
+
+    <!-- Menú de Navegación -->
+    <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
+      <ul class="nav-list">
+        {
+          MAIN_NAV.map((item) => {
+            const isActive = item.children
+              ? isCatalogRoute
+              : currentPath === item.href;
+
+            if (item.children) {
+              return (
+                <li class="nav-item has-dropdown">
+                  <a
+                    href={item.href}
+                    class:list={['nav-link', { active: isActive }]}
+                    aria-haspopup="true"
+                  >
+                    {item.label} <span class="nav-plus">+</span>
+                  </a>
+                  <div class="nav-dropdown" role="menu" aria-label="Submenú de Catálogos">
+                    {item.children.map((sub) => (
+                      <a
+                        href={sub.href}
+                        role="menuitem"
+                        class:list={['nav-dropdown-link', { active: currentPath === sub.href }]}
+                      >
+                        <span class="nav-dropdown-title">{sub.label}</span>
+                        <span class="nav-dropdown-desc">{sub.description}</span>
+                      </a>
+                    ))}
+                  </div>
+                </li>
+              );
+            }
+
+            return (
+              <li class="nav-item">
+                <a href={item.href} class:list={['nav-link', { active: isActive }]}>
+                  {item.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    <!-- Botón CTA WhatsApp -->
+    <div class="header-action">
+      <a
+        href={getWhatsAppUrl('Hola Dodera Hermanos Marmolería, quisiera solicitar un presupuesto.')}
+        class="btn-whatsapp-pill"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Cotizar por WhatsApp"
+      >
+        <svg
+          class="icon-whatsapp"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+          ></path>
+        </svg>
+        <span>Cotizar por WhatsApp</span>
+      </a>
+
+      <!-- Botón Toggle Menú Móvil -->
+      <button
+        class="mobile-toggle"
+        id="mobileToggle"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="mainNav"
+      >
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+      </button>
+    </div>
+  </div>
+</header>

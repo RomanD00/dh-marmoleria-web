@@ -1,0 +1,47 @@
+---
+import SEO, { type BreadcrumbItem } from '../components/SEO.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  ogImage?: string;
+  includeFaqSchema?: boolean;
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const {
+  title,
+  description,
+  canonicalPath,
+  ogImage,
+  includeFaqSchema = false,
+  breadcrumbs = []
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <SEO
+      title={title}
+      description={description}
+      canonicalPath={canonicalPath}
+      ogImage={ogImage}
+      includeFaqSchema={includeFaqSchema}
+      breadcrumbs={breadcrumbs}
+    />
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+    <Header />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+    <script is:inline src="/scripts/main.js"></script>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-name: Validación de Integridad y Seguridad Web
+name: Integración Continua y Validación Astro SSG
 
 on:
   push:
@@ -7,62 +7,66 @@ on:
     branches: [ main ]
 
 jobs:
-  verify:
-    name: Verificar Estructura, Enlaces y Seguridad
+  build-and-verify:
+    name: Build Astro SSG, Enlaces y Seguridad
     runs-on: ubuntu-latest
     steps:
       - name: Checkout del repositorio
         uses: actions/checkout@v4
+
+      - name: Configurar Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Compilar proyecto Astro SSG
+        run: npm run build
 
       - name: Configurar Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Validar integridad de recursos locales, JSON y Seguridad
+      - name: Validar integridad de compilación, sitemap y seguridad
         run: |
           python3 - << 'EOF'
           import os, re, json, sys
 
-          # 1. Validar archivos esenciales
-          required_files = [
-              'index.html',
-              'styles.css',
-              'script.js',
-              'vercel.json',
-              'robots.txt',
-              'sitemap.xml',
-              'site.webmanifest',
-              '.well-known/security.txt'
+          # 1. Validar archivos esenciales en dist/
+          required_dist = [
+              'dist/index.html',
+              'dist/materiales/index.html',
+              'dist/piletas-y-bachas/index.html',
+              'dist/mesas-de-arrime/index.html',
+              'dist/galeria/index.html',
+              'dist/contacto/index.html',
+              'dist/robots.txt',
+              'dist/sitemap-index.xml',
+              'dist/site.webmanifest',
+              'dist/.well-known/security.txt'
           ]
-          for f in required_files:
-              assert os.path.exists(f), f"Falta archivo crítico: {f}"
+          for f in required_dist:
+              assert os.path.exists(f), f"Falta archivo crítico en dist: {f}"
 
-          # 2. Validar sintaxis de vercel.json y site.webmanifest
+          # 2. Validar sintaxis de vercel.json
           with open('vercel.json', encoding='utf-8') as vf:
               vdata = json.load(vf)
               assert 'headers' in vdata, "vercel.json debe incluir cabeceras de seguridad"
 
-          with open('site.webmanifest', encoding='utf-8') as mf:
-              json.load(mf)
+          # 3. Verificar que los enlaces externos tengan rel="noopener noreferrer"
+          for root, dirs, files in os.walk('dist'):
+              for file in files:
+                  if file.endswith('.html'):
+                      fpath = os.path.join(root, file)
+                      with open(fpath, encoding='utf-8') as hf:
+                          content = hf.read()
+                          blank_links = re.findall(r'<a\s+[^>]*target="_blank"[^>]*>', content)
+                          for link in blank_links:
+                              assert 'noopener' in link and 'noreferrer' in link, f"Enlace externo inseguro en {fpath}: {link}"
 
-          # 3. Verificar que todas las imágenes y recursos referenciados en HTML y CSS existan en disco
-          with open('index.html', encoding='utf-8') as hf:
-              html = hf.read()
-
-          with open('styles.css', encoding='utf-8') as cf:
-              css = cf.read()
-
-          html_assets = re.findall(r'(?:src|href)="(assets/[^"]+)"', html)
-          css_assets = re.findall(r"url\(['\"]?(assets/[^'\")]+)['\"]?\)", css)
-
-          for asset in set(html_assets + css_assets):
-              assert os.path.exists(asset), f"Recurso referenciado no existe en disco: {asset}"
-
-          # 4. Verificar seguridad de enlaces externos (rel="noopener noreferrer" en target="_blank")
-          blank_links = re.findall(r'<a\s+[^>]*target="_blank"[^>]*>', html)
-          for link in blank_links:
-              assert 'noopener' in link and 'noreferrer' in link, f"Enlace externo sin noopener noreferrer: {link}"
-
-          print("Todas las validaciones de estructura, recursos y seguridad pasaron correctamente.")
+          print("Todas las validaciones de build, sitemap, recursos y seguridad pasaron exitosamente.")
           EOF

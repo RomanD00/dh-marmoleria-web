@@ -1,0 +1,72 @@
+---
+import { getWhatsAppUrl } from '../config/site';
+import type { CatalogDetailItem } from '../data/catalogos';
+
+export interface Props {
+  items: CatalogDetailItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="catalog-detail-section">
+  <div class="container">
+    <div class="catalog-detail-list">
+      {
+        items.map((item, idx) => (
+          <article class:list={['catalog-detail-item', { 'is-reversed': idx % 2 === 1 }]} id={item.id}>
+            <div class="catalog-detail-media">
+              <img
+                src={item.image}
+                alt={item.imageAlt}
+                class="catalog-detail-img"
+                loading={idx === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            </div>
+            <div class="catalog-detail-body">
+              <p class="section-tag">{item.categoryTag}</p>
+              <h2 class="catalog-detail-title">{item.title}</h2>
+              <p class="catalog-detail-subtitle">{item.subtitle}</p>
+              <p class="catalog-detail-desc">{item.description}</p>
+
+              <ul class="catalog-specs-list">
+                {item.specs.map((spec) => (
+                  <li>• {spec}</li>
+                ))}
+              </ul>
+
+              <p class="catalog-applications">
+                <strong>Aplicaciones recomendadas:</strong> {item.applications}
+              </p>
+
+              <a
+                href={getWhatsAppUrl(item.whatsappMessage)}
+                class="btn-hero-cta"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg
+                  class="icon-whatsapp"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+                  ></path>
+                </svg>
+                <span>Cotizar {item.title} por WhatsApp</span>
+                <span class="btn-arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

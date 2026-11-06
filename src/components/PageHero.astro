@@ -1,0 +1,32 @@
+---
+export interface Props {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  breadcrumbCurrent: string;
+}
+
+const { eyebrow, title, lead, breadcrumbCurrent } = Astro.props;
+---
+
+<section class="page-hero">
+  <div class="container page-hero-container">
+    <nav class="breadcrumb-nav" aria-label="Migas de pan">
+      <ol class="breadcrumb-list">
+        <li><a href="/">Inicio</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page">{breadcrumbCurrent}</li>
+      </ol>
+    </nav>
+
+    <p class="hero-eyebrow">{eyebrow}</p>
+    <h1 class="page-hero-title">{title}</h1>
+    <p class="page-hero-lead">{lead}</p>
+  </div>
+
+  <div class="hero-wave-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,52 C260,88 520,54 780,64 C1040,74 1240,58 1440,22 L1440,100 L0,100 Z" fill="#F9F8F5"></path>
+    </svg>
+  </div>
+</section>

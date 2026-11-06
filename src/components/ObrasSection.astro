@@ -1,0 +1,46 @@
+---
+import { OBRAS_DESTACADAS, type ObraItem } from '../data/obras';
+
+export interface Props {
+  items?: ObraItem[];
+}
+
+const { items = OBRAS_DESTACADAS } = Astro.props;
+---
+
+<section class="obras-section" id="obras">
+  <div class="container obras-container">
+    <!-- Cabecera de Sección a la Izquierda -->
+    <div class="obras-intro">
+      <p class="section-tag">04. OBRAS DESTACADAS</p>
+      <h2 class="section-heading">
+        Espacios<br />
+        que hablan<br />
+        por nosotros.
+      </h2>
+    </div>
+
+    <!-- Grid Horizontal de Proyectos -->
+    <div class="obras-grid">
+      {
+        items.map((obra) => (
+          <article class="obra-card">
+            <div class="obra-media">
+              <img
+                src={obra.image}
+                alt={obra.imageAlt}
+                class="obra-img"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="obra-info">
+              <h3 class="obra-title">{obra.title}</h3>
+              <p class="obra-specs">{obra.specs}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

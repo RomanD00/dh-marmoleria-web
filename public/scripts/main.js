@@ -1,7 +1,7 @@
 /**
  * ==========================================================================
  * DH MÁRMOLES — INTERACCIONES VANILLA JS
- * Funcionalidad minimalista, accesible y de alto rendimiento.
+ * Funcionalidad minimalista, accesible y 100% compatible con CSP estricto.
  * ==========================================================================
  */
 
@@ -12,56 +12,56 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. HEADER STICKY CON EFECTO BACKDROP AL HACER SCROLL
   // --------------------------------------------------------------------------
   const header = document.getElementById('header');
-  
-  const handleScroll = () => {
-    if (window.scrollY > 40) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-  };
 
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  handleScroll(); // Chequeo inicial
+  if (header) {
+    const handleScroll = () => {
+      if (window.scrollY > 40) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+  }
 
   // --------------------------------------------------------------------------
-  // 2. MENÚ MÓVIL (Toggle & Accesibilidad)
+  // 2. MENÚ MÓVIL (Toggle & Accesibilidad por Teclado)
   // --------------------------------------------------------------------------
   const mobileToggle = document.getElementById('mobileToggle');
   const mainNav = document.getElementById('mainNav');
 
   if (mobileToggle && mainNav) {
+    const closeMobileMenu = () => {
+      mainNav.classList.remove('is-active');
+      mobileToggle.classList.remove('is-active');
+      mobileToggle.setAttribute('aria-expanded', 'false');
+    };
+
     mobileToggle.addEventListener('click', () => {
       const isExpanded = mobileToggle.getAttribute('aria-expanded') === 'true';
       mobileToggle.setAttribute('aria-expanded', String(!isExpanded));
-      mainNav.classList.toggle('is-active');
-
-      // Animación de la hamburguesa a X
-      const bars = mobileToggle.querySelectorAll('.toggle-bar');
-      if (!isExpanded) {
-        bars[0].style.transform = 'translateY(7px) rotate(45deg)';
-        bars[1].style.opacity = '0';
-        bars[2].style.transform = 'translateY(-7px) rotate(-45deg)';
-      } else {
-        bars[0].style.transform = 'none';
-        bars[1].style.opacity = '1';
-        bars[2].style.transform = 'none';
-      }
+      mobileToggle.classList.toggle('is-active', !isExpanded);
+      mainNav.classList.toggle('is-active', !isExpanded);
     });
 
     // Cerrar menú móvil al hacer clic en un enlace de navegación
-    const navLinks = mainNav.querySelectorAll('.nav-link');
+    const navLinks = mainNav.querySelectorAll('a');
     navLinks.forEach((link) => {
       link.addEventListener('click', () => {
         if (mainNav.classList.contains('is-active')) {
-          mainNav.classList.remove('is-active');
-          mobileToggle.setAttribute('aria-expanded', 'false');
-          const bars = mobileToggle.querySelectorAll('.toggle-bar');
-          bars[0].style.transform = 'none';
-          bars[1].style.opacity = '1';
-          bars[2].style.transform = 'none';
+          closeMobileMenu();
         }
       });
+    });
+
+    // Cerrar menú móvil con tecla Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mainNav.classList.contains('is-active')) {
+        closeMobileMenu();
+        mobileToggle.focus();
+      }
     });
   }
 
@@ -103,7 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           trigger.setAttribute('aria-expanded', 'true');
           panel.removeAttribute('hidden');
-          // Forzar reflujo para activar la transición CSS grid
           void panel.offsetHeight;
           panel.classList.add('is-open');
         }
@@ -112,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 4. SCROLL SUAVE PARA ENLACES INTERNOS
+  // 4. SCROLL SUAVE PARA ENLACES DE ANCLA INTERNA
   // --------------------------------------------------------------------------
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', function (e) {

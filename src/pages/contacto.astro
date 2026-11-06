@@ -1,0 +1,177 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ArquitectosSection from '../components/ArquitectosSection.astro';
+import FaqSection from '../components/FaqSection.astro';
+import { SITE_CONFIG, getWhatsAppUrl } from '../config/site';
+---
+
+<MainLayout
+  title="Contacto y Cotizaciones por WhatsApp | Dodera Hermanos Marmolería"
+  description="Solicitá tu presupuesto sin cargo por WhatsApp. Fabricación e instalación a medida de mármol, granito, cuarzo y sinterizados con cobertura en CABA y GBA."
+  canonicalPath="/contacto"
+  includeFaqSchema={true}
+  breadcrumbs={[
+    { name: 'Inicio', path: '/' },
+    { name: 'Contacto', path: '/contacto' }
+  ]}
+>
+  <PageHero
+    eyebrow="ATENCIÓN PERSONALIZADA"
+    title="Cotizá tu proyecto en piedra a medida."
+    lead="Brindamos asesoramiento técnico directo y cotizaciones sin cargo para clientes particulares, arquitectos, interioristas y constructoras en CABA y GBA."
+    breadcrumbCurrent="Contacto"
+  />
+
+  <section class="contacto-page-section">
+    <div class="container">
+      <div class="contacto-grid">
+        <!-- Tarjeta Oscura de Contacto Directo -->
+        <div class="contacto-card-main">
+          <div>
+            <p class="section-tag">CANAL DIRECTO</p>
+            <h2 class="contacto-card-title">Hablemos por WhatsApp sobre tu obra.</h2>
+            <p class="contacto-card-desc">
+              Envianos las medidas aproximadas, croquis o planos técnicos de tu proyecto y te responderemos con una cotización detallada y asesoramiento sobre el material ideal.
+            </p>
+
+            <div class="contacto-direct-channels">
+              <div class="contacto-channel-row">
+                <div class="contacto-channel-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <span class="contacto-channel-label">WhatsApp Oficial</span>
+                  <a
+                    href={getWhatsAppUrl('Hola Dodera Hermanos Marmolería, quisiera solicitar una cotización.')}
+                    class="contacto-channel-value"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {SITE_CONFIG.contact.phoneDisplay}
+                  </a>
+                </div>
+              </div>
+
+              <div class="contacto-channel-row">
+                <div class="contacto-channel-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                </div>
+                <div>
+                  <span class="contacto-channel-label">Área de Cobertura</span>
+                  <span class="contacto-channel-value">{SITE_CONFIG.coverage}</span>
+                </div>
+              </div>
+
+              <div class="contacto-channel-row">
+                <div class="contacto-channel-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                </div>
+                <div>
+                  <span class="contacto-channel-label">Instagram Oficial</span>
+                  <a
+                    href={SITE_CONFIG.social.instagramUrl}
+                    class="contacto-channel-value"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {SITE_CONFIG.social.instagramHandle}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <a
+              href={getWhatsAppUrl('Hola Dodera Hermanos Marmolería, quisiera cotizar un proyecto.')}
+              class="btn-hero-cta"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg
+                class="icon-whatsapp"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+                ></path>
+              </svg>
+              <span>Iniciar conversación por WhatsApp</span>
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Cómo trabajamos cada presupuesto -->
+        <div class="contacto-steps-box">
+          <p class="section-tag">PROCESO DE TRABAJO</p>
+          <h2 class="section-heading">De la cotización a la instalación en obra.</h2>
+          <p class="section-lead">
+            Acompañamos cada etapa con precisión técnica y comunicación directa.
+          </p>
+
+          <div class="contacto-steps-list">
+            <div class="contacto-step-item">
+              <span class="contacto-step-num">01</span>
+              <div>
+                <h3 class="contacto-step-title">Envío de medidas o planos</h3>
+                <p class="contacto-step-text">
+                  Compartinos por WhatsApp las medidas aproximadas, un croquis o el plano en PDF/DWG junto con el material o tono que buscás.
+                </p>
+              </div>
+            </div>
+
+            <div class="contacto-step-item">
+              <span class="contacto-step-num">02</span>
+              <div>
+                <h3 class="contacto-step-title">Presupuesto sin cargo y asesoramiento</h3>
+                <p class="contacto-step-text">
+                  Elaboramos una cotización clara y te asesoramos sobre las prestaciones técnicas de cada piedra según el uso del espacio.
+                </p>
+              </div>
+            </div>
+
+            <div class="contacto-step-item">
+              <span class="contacto-step-num">03</span>
+              <div>
+                <h3 class="contacto-step-title">Medición milimétrica en obra</h3>
+                <p class="contacto-step-text">
+                  Una vez aprobado el presupuesto y con los muebles base instalados a nivel, relevamos las medidas definitivas en tu obra en CABA o GBA.
+                </p>
+              </div>
+            </div>
+
+            <div class="contacto-step-item">
+              <span class="contacto-step-num">04</span>
+              <div>
+                <h3 class="contacto-step-title">Fabricación propia e instalación</h3>
+                <p class="contacto-step-text">
+                  Ejecutamos el corte, traforos y terminaciones en nuestro taller y realizamos la colocación final cumpliendo los plazos pactados.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ArquitectosSection />
+  <FaqSection />
+</MainLayout>

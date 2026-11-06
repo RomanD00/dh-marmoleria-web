@@ -1,0 +1,55 @@
+---
+import { SITE_CONFIG } from '../config/site';
+import { TALLER_PHOTOS } from '../data/taller';
+---
+
+<section class="taller-section" id="taller">
+  <div class="container taller-container">
+    <!-- Bloque Izquierdo: Instagram Handle Oficial y Mensaje -->
+    <div class="taller-intro">
+      <p class="section-tag">05. VIDA EN EL TALLER</p>
+      <a
+        href={SITE_CONFIG.social.instagramUrl}
+        class="instagram-brand-link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg
+          class="icon-instagram"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+        <span class="instagram-handle">{SITE_CONFIG.social.instagramHandle}</span>
+      </a>
+      <p class="taller-desc">
+        Seguinos en el día a día de nuestro taller y mirá más de nuestros trabajos.
+      </p>
+    </div>
+
+    <!-- 4 Fotografías Cuadradas de Procesos de Taller -->
+    <div class="taller-photos-grid">
+      {
+        TALLER_PHOTOS.map((photo) => (
+          <div class="taller-photo-item">
+            <img
+              src={photo.image}
+              alt={photo.imageAlt}
+              class="taller-img"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

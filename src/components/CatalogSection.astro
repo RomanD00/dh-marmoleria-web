@@ -1,0 +1,53 @@
+---
+import { CATALOG_HOME_CARDS } from '../data/catalogos';
+---
+
+<section class="catalogo-section" id="catalogos">
+  <div class="container catalogo-container">
+    <!-- Bloque Introductorio a la izquierda -->
+    <div class="catalogo-intro">
+      <p class="section-tag">01. CATÁLOGO</p>
+      <h2 class="section-heading">
+        Materiales<br />
+        y productos<br />
+        para tu espacio.
+      </h2>
+      <p class="section-lead">
+        Una cuidada selección de piedras, terminaciones y complementos para proyectos residenciales y comerciales.
+      </p>
+    </div>
+
+    <!-- Las Tres Tarjetas Fotográficas Altas con Esquinas Superiores Redondeadas -->
+    <div class="catalogo-cards-grid">
+      {
+        CATALOG_HOME_CARDS.map((card) => (
+          <article class:list={['catalogo-card', card.isWide ? 'card-wide' : 'card-narrow']}>
+            <div class="catalogo-card-media">
+              <img
+                src={card.image}
+                alt={card.imageAlt}
+                class="card-img"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="card-gradient"></div>
+            </div>
+            <div class="catalogo-card-content">
+              <div class="card-info">
+                <span class="card-num">{card.num}</span>
+                <h3 class="card-title">{card.title}</h3>
+              </div>
+              <a
+                href={card.href}
+                class="card-circle-btn"
+                aria-label={`Ver catálogo de ${card.title}`}
+              >
+                <span class="arrow-glyph" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

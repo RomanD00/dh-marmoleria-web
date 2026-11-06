@@ -1,0 +1,18 @@
+{
+  "name": "dodera-hermanos-marmoleria",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sitio institucional y catálogo visual de Dodera Hermanos Marmolería (Buenos Aires, CABA y GBA)",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.4.7"
+  }
+}

@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://doderahermanos.com.ar/sitemap.xml
