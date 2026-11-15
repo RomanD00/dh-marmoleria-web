@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" fill="none">
+  <rect width="800" height="600" fill="#F6F3ED"/>
+  <!-- Ejes arquitectónicos referenciales -->
+  <line x1="60" y1="300" x2="740" y2="300" stroke="#E5DFC0" stroke-width="0.8" stroke-dasharray="4 6"/>
+  <line x1="400" y1="60" x2="400" y2="540" stroke="#E5DFC0" stroke-width="0.8" stroke-dasharray="4 6"/>
+  
+  <!-- Countertop Cutout Frame -->
+  <rect x="120" y="130" width="560" height="340" rx="8" fill="#EFECE5" stroke="#121210" stroke-width="1.8"/>
+  
+  <!-- Flange -->
+  <rect x="134" y="144" width="532" height="312" rx="6" fill="#E5E0D6" stroke="rgba(18,18,16,0.3)" stroke-width="1"/>
+  
+  <!-- Main Basin -->
+  <rect x="155" y="165" width="490" height="270" rx="8" fill="url(#linealGrad)" stroke="#121210" stroke-width="1.4"/>
+  
+  <!-- Drain -->
+  <circle cx="490" cy="300" r="34" fill="#CBC4B5" stroke="#121210" stroke-width="1.5"/>
+  <circle cx="490" cy="300" r="22" fill="#B7AFA0" stroke="#121210" stroke-width="1"/>
+  <circle cx="490" cy="300" r="6" fill="#121210"/>
+
+  <!-- Indicador Conceptual Sin Escala -->
+  <text x="400" y="84" font-family="'Plus Jakarta Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#773508" text-anchor="middle" letter-spacing="0.16em">MODELO CONCEPTUAL · LINEAL</text>
+  <text x="400" y="525" font-family="'Plus Jakarta Sans', -apple-system, sans-serif" font-size="10.5" font-weight="500" fill="#706E6B" text-anchor="middle" letter-spacing="0.18em">ESQUEMA ARQUITECTÓNICO · SIN ESCALA</text>
+
+  <defs>
+    <linearGradient id="linealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E3DDD2"/>
+      <stop offset="100%" stop-color="#CBC4B5"/>
+    </linearGradient>
+  </defs>
+</svg>

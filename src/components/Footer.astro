@@ -1,22 +1,38 @@
 ---
-import { SITE_CONFIG, getWhatsAppUrl } from '../config/site';
+import { SITE_CONFIG, MAIN_NAV, getWhatsAppUrl, resolveMainNavHref } from '../config/site';
+
+const contactoNavItem = MAIN_NAV.find((item) => item.label === 'Contacto');
+const contactoHref = contactoNavItem ? resolveMainNavHref(contactoNavItem, 'light') : '/#contacto';
+
+const legalLinks = [
+  SITE_CONFIG.legal.privacyHref
+    ? { label: 'Privacidad', href: SITE_CONFIG.legal.privacyHref }
+    : null,
+  SITE_CONFIG.legal.termsHref
+    ? { label: 'Términos', href: SITE_CONFIG.legal.termsHref }
+    : null,
+  SITE_CONFIG.legal.procesosHref
+    ? { label: 'Procesos', href: SITE_CONFIG.legal.procesosHref }
+    : null
+].filter((item): item is { label: string; href: string } => item !== null);
 ---
 
 <footer class="site-footer" id="contacto">
   <div class="container footer-container">
-    <!-- Fila Superior: 5 Columnas Separadas por Líneas Verticales -->
+    <!-- Fila Superior: 4 Bloques Editoriales Equilibrados -->
     <div class="footer-columns">
-      <!-- Columna 1: Marca Original + Slogan -->
+      <!-- Bloque 1: Marca Oficial, Slogan e Identidad -->
       <div class="footer-col footer-col-brand">
         <div class="footer-brand-lockup">
           <div class="footer-logo">
             <img
               src={SITE_CONFIG.logoWhite}
+              srcset="/assets/brand/logo-dh-header-white-1x.png 1x, /assets/brand/logo-dh-header-white-2x.png 2x, /assets/brand/logo-dh-header-white-3x.png 3x"
               alt={SITE_CONFIG.name}
               class="footer-logo-img"
-              width="108"
-              height="68"
-              loading="lazy"
+              width="114"
+              height="72"
+              loading="eager"
               decoding="async"
             />
           </div>
@@ -25,123 +41,160 @@ import { SITE_CONFIG, getWhatsAppUrl } from '../config/site';
             <p class="brand-slogan">{SITE_CONFIG.slogan}</p>
           </div>
         </div>
+        <p class="footer-brand-desc">
+          Fabricación e instalación a medida en piedra natural, cuarzo y superficies sinterizadas.
+        </p>
       </div>
 
-      <!-- Columna 2: Cobertura -->
-      <div class="footer-col footer-col-location">
-        <div class="footer-location-item">
-          <svg
-            class="icon-pin"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
+      <!-- Bloque 2: Contacto Directo y Cobertura -->
+      <div class="footer-col footer-col-contact">
+        <p class="footer-col-label">Contacto y cobertura</p>
+        <div class="footer-contact-stack">
+          <a
+            href={getWhatsAppUrl('Hola Dodera Hermanos Marmolería, quisiera hacer una consulta.')}
+            class="footer-whatsapp-link"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-            <circle cx="12" cy="10" r="3"></circle>
-          </svg>
-          <span class="location-text">{SITE_CONFIG.coverage}</span>
+            <span class="footer-icon-badge" aria-hidden="true">
+              <svg
+                class="icon-whatsapp-footer"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+                ></path>
+              </svg>
+            </span>
+            <div class="contact-info">
+              <span class="contact-phone">{SITE_CONFIG.contact.phoneDisplay}</span>
+              <span class="contact-action">Cotizá por WhatsApp</span>
+            </div>
+          </a>
+
+          <div class="footer-location-item">
+            <span class="footer-icon-badge" aria-hidden="true">
+              <svg
+                class="icon-pin"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </span>
+            <div class="location-info">
+              <span class="location-text">{SITE_CONFIG.coverage}</span>
+              <span class="location-subtext">Atención y medición en obra</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Columna 3: Contacto WhatsApp -->
-      <div class="footer-col footer-col-contact">
-        <a
-          href={getWhatsAppUrl('Hola Dodera Hermanos Marmolería, quisiera hacer una consulta.')}
-          class="footer-whatsapp-link"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <svg
-            class="icon-whatsapp-footer"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <path
-              d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
-            ></path>
-          </svg>
-          <div class="contact-info">
-            <span class="contact-phone">{SITE_CONFIG.contact.phoneDisplay}</span>
-            <span class="contact-action">Cotizá por WhatsApp</span>
-          </div>
-        </a>
-      </div>
-
-      <!-- Columna 4: Navegación del Footer (Galería incluida) -->
+      <!-- Bloque 3: Navegación -->
       <div class="footer-col footer-col-nav">
+        <p class="footer-col-label">Navegación</p>
         <nav aria-label="Navegación de pie de página">
           <ul class="footer-nav-list">
-            <li><a href="#hero" class="footer-nav-link">Inicio</a></li>
-            <li><a href="#catalogos" class="footer-nav-link">Catálogo</a></li>
-            <li><a href="#obras" class="footer-nav-link">Galería</a></li>
-            <li><a href="#contacto" class="footer-nav-link">Contacto</a></li>
+            <li><a href="/#hero" class="footer-nav-link">Inicio</a></li>
+            <li><a href="/#catalogos" class="footer-nav-link">Catálogo</a></li>
+            <li><a href="/#obras" class="footer-nav-link">Galería</a></li>
+            <li><a href={contactoHref} class="footer-nav-link">Contacto</a></li>
           </ul>
         </nav>
       </div>
 
-      <!-- Columna 5: Redes Sociales -->
+      <!-- Bloque 4: Redes Sociales -->
       <div class="footer-col footer-col-social">
+        <p class="footer-col-label">Redes sociales</p>
         <div class="social-links" aria-label={`Redes sociales de ${SITE_CONFIG.name}`}>
-          <!-- Instagram -->
           <a
             href={SITE_CONFIG.social.instagramUrl}
-            class="social-icon-btn"
+            class="social-link-card"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`Instagram de ${SITE_CONFIG.name}`}
+            aria-label={`Instagram de ${SITE_CONFIG.name} (@dh.marmoleria)`}
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-            </svg>
+            <span class="social-icon-btn" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </span>
+            <div class="social-link-text">
+              <span class="social-name">Instagram</span>
+              <span class="social-handle">@dh.marmoleria</span>
+            </div>
           </a>
 
-          <!-- Facebook -->
           <a
             href={SITE_CONFIG.social.facebookUrl}
-            class="social-icon-btn"
+            class="social-link-card"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`Facebook de ${SITE_CONFIG.name}`}
+            aria-label={`Facebook de ${SITE_CONFIG.name} (Dodera Hermanos)`}
           >
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-            </svg>
+            <span class="social-icon-btn" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+            </span>
+            <div class="social-link-text">
+              <span class="social-name">Facebook</span>
+              <span class="social-handle">Dodera Hermanos</span>
+            </div>
           </a>
         </div>
       </div>
     </div>
 
-    <!-- Fila Inferior: Copyright y Enlaces Legales -->
+    <!-- Fila Inferior: Copyright y Enlaces Vigentes -->
     <div class="footer-bottom-row">
       <p class="copyright-text">
         &copy; {SITE_CONFIG.copyrightYear} {SITE_CONFIG.name}. Todos los derechos reservados.
       </p>
-      <div class="legal-links">
-        <a href="#contacto" class="legal-link">Privacidad</a>
-        <span class="legal-sep" aria-hidden="true">|</span>
-        <a href="#contacto" class="legal-link">Términos</a>
-        <span class="legal-sep" aria-hidden="true">|</span>
-        <a href="#taller" class="legal-link">Procesos</a>
-      </div>
+      {
+        legalLinks.length > 0 && (
+          <div class="legal-links">
+            {legalLinks.map((item, idx) => (
+              <>
+                {idx > 0 && (
+                  <span class="legal-sep" aria-hidden="true">
+                    |
+                  </span>
+                )}
+                <a href={item.href} class="legal-link">
+                  {item.label}
+                </a>
+              </>
+            ))}
+          </div>
+        )
+      }
     </div>
   </div>
 </footer>

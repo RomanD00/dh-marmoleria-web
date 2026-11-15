@@ -1,33 +1,121 @@
 ---
-import { SITE_CONFIG, MAIN_NAV, getWhatsAppUrl } from '../config/site';
+import {
+  SITE_CONFIG,
+  MAIN_NAV,
+  getWhatsAppUrl,
+  resolveCatalogNavHref,
+  resolveMainNavHref
+} from '../config/site';
+
+export interface Props {
+  theme?: 'dark' | 'light';
+  activeNav?: string;
+}
+
+const { theme = 'dark', activeNav = 'Inicio' } = Astro.props;
+
+const homeHref = theme === 'light' ? '/' : '#hero';
+const logoVariant = theme === 'light' ? 'dark' : 'white';
+const logoPrefix = `/assets/brand/logo-dh-header-${logoVariant}`;
 ---
 
-<header class="site-header" id="header">
-  <div class="container header-container">
-    <!-- Logo Original Dodera Hermanos Marmolería -->
-    <a href="#hero" class="brand-logo" aria-label={`${SITE_CONFIG.name} - Ir al inicio`}>
-      <img
-        src={SITE_CONFIG.logoWhite}
-        alt={SITE_CONFIG.name}
-        class="brand-logo-img"
-        width="114"
-        height="72"
-        fetchpriority="high"
-      />
+<header class:list={['site-header', { 'header-light': theme === 'light' }]} id="header">
+  <div class:list={['container', 'header-container', { 'container-wide': theme === 'light' }]}>
+    <!-- Logotipo Oficial Dodera Hermanos Marmolería -->
+    <a href={homeHref} class="brand-logo" aria-label={`${SITE_CONFIG.name} - Ir al inicio`}>
+      <picture class="brand-logo-picture">
+        <source
+          media="(max-width: 480px)"
+          srcset={`${logoPrefix}-mobile-1x.png 1x, ${logoPrefix}-mobile-2x.png 2x, ${logoPrefix}-mobile-3x.png 3x`}
+          width="70"
+          height="44"
+        />
+        <source
+          media="(max-width: 768px)"
+          srcset={`${logoPrefix}-tablet-1x.png 1x, ${logoPrefix}-tablet-2x.png 2x`}
+          width="82"
+          height="52"
+        />
+        <img
+          src={`${logoPrefix}-1x.png`}
+          srcset={`${logoPrefix}-1x.png 1x, ${logoPrefix}-2x.png 2x, ${logoPrefix}-3x.png 3x`}
+          alt={SITE_CONFIG.name}
+          class="brand-logo-img"
+          width="114"
+          height="72"
+          fetchpriority="high"
+          decoding="sync"
+        />
+      </picture>
     </a>
 
     <!-- Menú de Navegación -->
     <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
       <ul class="nav-list">
         {
-          MAIN_NAV.map((item, idx) => (
-            <li class="nav-item">
-              <a href={item.href} class:list={['nav-link', { active: idx === 0 }]}>
-                {item.label}
-                {item.hasPlus && <span class="nav-plus">+</span>}
-              </a>
-            </li>
-          ))
+          MAIN_NAV.map((item) => {
+            const isActive = activeNav
+              ? item.label.toLowerCase().startsWith(activeNav.toLowerCase())
+              : false;
+            const navHref = resolveMainNavHref(item, theme);
+
+            if (item.children && item.children.length > 0) {
+              return (
+                <li class="nav-item nav-item-dropdown" id="catalogDropdownItem">
+                  <button
+                    type="button"
+                    class:list={['nav-link', 'nav-dropdown-trigger', { active: isActive }]}
+                    id="catalogDropdownBtn"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    aria-controls="catalogDropdownMenu"
+                  >
+                    <span>{item.label}</span>
+                    <svg
+                      class="nav-chevron"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="2.5 4.5 6 8 9.5 4.5" />
+                    </svg>
+                  </button>
+
+                  <ul
+                    class="nav-dropdown-menu"
+                    id="catalogDropdownMenu"
+                    role="menu"
+                    aria-label="Catálogos"
+                  >
+                    {item.children.map((sub) => {
+                      const subHref = resolveCatalogNavHref(sub, theme);
+                      return (
+                        <li class="nav-dropdown-item" role="none">
+                          <a href={subHref} class="nav-dropdown-link" role="menuitem">
+                            <span class="dropdown-item-num">{sub.num}</span>
+                            <span class="dropdown-item-divider" aria-hidden="true" />
+                            <span class="dropdown-item-label">{sub.label}</span>
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </li>
+              );
+            }
+
+            return (
+              <li class="nav-item">
+                <a href={navHref} class:list={['nav-link', { active: isActive }]}>
+                  {item.label}
+                </a>
+              </li>
+            );
+          })
         }
       </ul>
     </nav>

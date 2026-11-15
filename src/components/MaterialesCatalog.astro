@@ -1,0 +1,349 @@
+---
+import { MATERIALES_HERO_CONTENT, MATERIALES_FAMILIES } from '../data/materiales';
+---
+
+<!-- Hero Editorial de Materiales -->
+<section class="materiales-hero" aria-labelledby="materiales-hero-title">
+  <div class="container container-wide materiales-hero-container">
+    <div class="materiales-hero-text">
+      <div class="materiales-eyebrow-row">
+        <span class="materiales-eyebrow-rule" aria-hidden="true"></span>
+        <span class="materiales-eyebrow">{MATERIALES_HERO_CONTENT.eyebrow}</span>
+      </div>
+
+      <h1 class="materiales-hero-title" id="materiales-hero-title">
+        El carácter de<br />cada material.
+      </h1>
+
+      <p class="materiales-hero-desc">
+        {MATERIALES_HERO_CONTENT.description}
+      </p>
+    </div>
+
+    <div class="materiales-hero-visual">
+      <div class="materiales-arch-wrapper">
+        <img
+          src={MATERIALES_HERO_CONTENT.image}
+          alt={MATERIALES_HERO_CONTENT.imageAlt}
+          class="materiales-arch-img"
+          width="1041"
+          height="627"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Grilla 2x2 de las 4 Familias de Materiales -->
+<section class="materiales-catalog-section" aria-label="Familias de materiales">
+  <div class="container container-wide">
+    <div class="materiales-grid">
+      {
+        MATERIALES_FAMILIES.map((item, index) => (
+          <article class="material-card">
+            <a
+              href={item.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="material-card-link"
+              aria-label={`Consultar por ${item.name} (${item.subtitle})`}
+            >
+              <div class="material-card-media">
+                <img
+                  src={item.image}
+                  alt={item.imageAlt}
+                  class="material-card-img"
+                  loading={index < 2 ? 'eager' : 'lazy'}
+                  decoding="async"
+                  width="927"
+                  height="600"
+                />
+              </div>
+
+              <div class="material-card-footer">
+                <span class="material-num" aria-hidden="true">{item.num}</span>
+
+                <span class="material-divider" aria-hidden="true"></span>
+
+                <div class="material-info">
+                  <h2 class="material-title">{item.name}</h2>
+                  <p class="material-subtitle">{item.subtitle}</p>
+                </div>
+
+                <span class="material-arrow-btn" aria-hidden="true">
+                  <svg
+                    class="material-arrow-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="13 6 19 12 13 18"></polyline>
+                  </svg>
+                </span>
+              </div>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .materiales-hero {
+    background-color: var(--color-bg-warm, #F9F8F5);
+    padding-top: calc(var(--header-height, 90px) + 20px);
+    padding-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .materiales-hero-container {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    align-items: end;
+    gap: 32px;
+  }
+
+  .materiales-hero-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 18px;
+    max-width: 500px;
+  }
+
+  .materiales-eyebrow-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .materiales-eyebrow-rule {
+    display: inline-block;
+    width: 38px;
+    height: 1.5px;
+    background-color: #8B5E3C;
+    flex-shrink: 0;
+  }
+
+  .materiales-eyebrow {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #2B2927;
+  }
+
+  .materiales-hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.75rem, 4.6vw, 4.15rem);
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: #121210;
+    margin: 0 0 22px 0;
+  }
+
+  .materiales-hero-desc {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.02rem;
+    line-height: 1.56;
+    color: #3A3835;
+    margin: 0;
+    max-width: 420px;
+  }
+
+  .materiales-hero-visual {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 100%;
+  }
+
+  .materiales-arch-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 680px;
+    aspect-ratio: 347 / 209;
+    overflow: hidden;
+  }
+
+  .materiales-arch-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right bottom;
+    display: block;
+  }
+
+  /* Grilla 2x2 */
+  .materiales-catalog-section {
+    background-color: var(--color-bg-warm, #F9F8F5);
+    padding: 8px 0 16px 0;
+  }
+
+  .materiales-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: clamp(24px, 2.5vw, 36px);
+    row-gap: clamp(28px, 3vw, 42px);
+  }
+
+  .material-card-link {
+    display: flex;
+    flex-direction: column;
+    color: inherit;
+    text-decoration: none;
+    outline: none;
+  }
+
+  .material-card-link:focus-visible {
+    outline: 2px solid var(--color-terracotta, #773508);
+    outline-offset: 6px;
+  }
+
+  .material-card-media {
+    width: 100%;
+    aspect-ratio: 309 / 200;
+    background-color: #EAE5DC;
+    overflow: hidden;
+  }
+
+  .material-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .material-card-link:hover .material-card-img {
+    transform: scale(1.03);
+  }
+
+  .material-card-footer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 18px 2px 20px 2px;
+    border-bottom: 1px solid rgba(18, 18, 16, 0.14);
+  }
+
+  .material-card-footer::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 2px;
+    background-color: #8B5E3C;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .material-card-link:hover .material-card-footer::after,
+  .material-card-link:focus-visible .material-card-footer::after {
+    transform: scaleX(1);
+  }
+
+  .material-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #8B5E3C;
+    padding-right: 16px;
+    flex-shrink: 0;
+  }
+
+  .material-divider {
+    width: 1px;
+    height: 38px;
+    background-color: rgba(18, 18, 16, 0.16);
+    margin-right: 18px;
+    flex-shrink: 0;
+  }
+
+  .material-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .material-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.7rem, 2.2vw, 2.15rem);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: #121210;
+    margin: 0;
+    transition: color 0.25s ease;
+  }
+
+  .material-card-link:hover .material-title {
+    color: #773508;
+  }
+
+  .material-subtitle {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #4A4845;
+    margin: 0;
+  }
+
+  .material-arrow-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #121210;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      transform 0.25s ease;
+    flex-shrink: 0;
+  }
+
+  .material-card-link:hover .material-arrow-btn {
+    background-color: #8B5E3C;
+    color: #FFFFFF;
+  }
+
+  .material-arrow-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  @media (max-width: 992px) {
+    .materiales-hero-container {
+      grid-template-columns: 1fr;
+    }
+
+    .materiales-arch-wrapper {
+      max-width: 540px;
+      margin-left: auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .materiales-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

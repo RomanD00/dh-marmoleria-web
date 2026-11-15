@@ -1,11 +1,17 @@
 ---
 import { SITE_CONFIG } from '../config/site';
-import { TALLER_PHOTOS } from '../data/taller';
+import { INSTAGRAM_POSTS, type InstagramPost } from '../data/instagram';
+
+export interface Props {
+  posts?: InstagramPost[];
+}
+
+const { posts = INSTAGRAM_POSTS } = Astro.props;
 ---
 
 <section class="taller-section" id="taller">
   <div class="container taller-container">
-    <!-- Bloque Izquierdo: Instagram Handle Oficial y Mensaje -->
+    <!-- Bloque Izquierdo: Instagram Handle Oficial, Mensaje y Controles -->
     <div class="taller-intro">
       <p class="section-tag">05. VIDA EN EL TALLER</p>
       <a
@@ -31,25 +37,126 @@ import { TALLER_PHOTOS } from '../data/taller';
         <span class="instagram-handle">{SITE_CONFIG.social.instagramHandle}</span>
       </a>
       <p class="taller-desc">
-        Seguinos en el día a día de nuestro taller y mirá más de nuestros trabajos.
+        Seguinos en el día a día de nuestro taller y mirá nuestras instalaciones reales.
       </p>
+
+      <!-- Controles Minimalistas del Carrusel -->
+      <div class="taller-carousel-controls" role="group" aria-label="Controles del carrusel de Instagram">
+        <button
+          type="button"
+          class="taller-carousel-btn"
+          id="igCarouselPrev"
+          aria-label="Publicaciones anteriores"
+          aria-controls="igCarouselTrack"
+          disabled
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="taller-carousel-btn"
+          id="igCarouselNext"
+          aria-label="Publicaciones siguientes"
+          aria-controls="igCarouselTrack"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
     </div>
 
-    <!-- 4 Fotografías Cuadradas de Procesos de Taller -->
-    <div class="taller-photos-grid">
-      {
-        TALLER_PHOTOS.map((photo) => (
-          <div class="taller-photo-item">
-            <img
-              src={photo.image}
-              alt={photo.imageAlt}
-              class="taller-img"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-        ))
-      }
+    <!-- Carrusel Horizontal de Publicaciones Reales de Instagram -->
+    <div class="taller-carousel-viewport">
+      <div
+        class="taller-photos-grid taller-carousel-track"
+        id="igCarouselTrack"
+        role="region"
+        aria-label="Publicaciones recientes de Instagram de @dh.marmoleria"
+        tabindex="0"
+      >
+        {
+          posts.map((post) => (
+            <a
+              href={post.permalink}
+              class="taller-photo-item instagram-post-card"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${post.imageAlt} — Ver publicación en Instagram`}
+              data-media-type={post.mediaType}
+            >
+              <img
+                src={post.image}
+                alt={post.imageAlt}
+                class="taller-img"
+                width="480"
+                height="480"
+                loading="lazy"
+                decoding="async"
+              />
+
+              {post.mediaType !== 'image' && (
+                <span class="ig-media-badge" aria-hidden="true">
+                  {post.mediaType === 'reel' ? (
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <polygon points="8 5 19 12 8 19 8 5"></polygon>
+                    </svg>
+                  ) : (
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.9"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <rect x="8" y="8" width="12" height="12" rx="2.5"></rect>
+                      <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
+                    </svg>
+                  )}
+                </span>
+              )}
+
+              <span class="ig-hover-overlay" aria-hidden="true">
+                <span class="ig-hover-pill">
+                  <span>Ver en Instagram</span>
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </span>
+              </span>
+            </a>
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>

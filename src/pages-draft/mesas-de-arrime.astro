@@ -1,32 +1,29 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import PageHero from '../components/PageHero.astro';
-import CatalogDetailSection from '../components/CatalogDetailSection.astro';
-import DiferencialesSection from '../components/DiferencialesSection.astro';
-import ArquitectosSection from '../components/ArquitectosSection.astro';
-import FaqSection from '../components/FaqSection.astro';
-import { MESAS_ITEMS } from '../data/catalogos';
+import MesasHero from '../components/MesasHero.astro';
+import MesasCatalog from '../components/MesasCatalog.astro';
+import MesasPreFooter from '../components/MesasPreFooter.astro';
 ---
 
 <MainLayout
-  title="Mesas de Arrime y Mobiliario en Piedra Natural y Hierro | Dodera Hermanos Marmolería"
-  description="Diseño y fabricación a medida de mesas de arrime, consolas de recibidor y mesas bajas con tapas de mármol, cuarzo o sinterizado y bases de hierro estructural."
-  canonicalPath="/mesas-de-arrime"
-  ogImage="/assets/catalogos/03-mesas-arrime.jpg"
-  includeFaqSchema={true}
+  title="Catálogo de Mesas de Arrime | Dodera Hermanos Marmolería"
+  description="Colección de mesas de arrime donde la estructura de hierro y la piedra natural se encuentran en un lenguaje contemporáneo, sobrio y atemporal."
+  canonicalPath="/preview-mesas"
+  ogImage="/assets/mesas/modelo-01.jpg"
+  headerTheme="light"
+  activeNav="Catálogo"
+  noIndex={true}
   breadcrumbs={[
     { name: 'Inicio', path: '/' },
-    { name: 'Mesas de Arrime', path: '/mesas-de-arrime' }
+    { name: 'Mesas de Arrime', path: '/preview-mesas' }
   ]}
 >
-  <PageHero
-    eyebrow="03. MOBILIARIO DE AUTOR"
-    title="Mesas de arrime en piedra natural y hierro."
-    lead="Piezas de mobiliario concebidas en nuestro taller combinando tapas macizas de mármol, cuarzo o piedra sinterizada con estructuras esbeltas de herrería fina a medida."
-    breadcrumbCurrent="Mesas de Arrime"
-  />
-  <CatalogDetailSection items={MESAS_ITEMS} />
-  <DiferencialesSection />
-  <ArquitectosSection />
-  <FaqSection />
+  <!-- Hero Compacto Editorial con Recorte Orgánico -->
+  <MesasHero />
+
+  <!-- Grilla Editorial de 2 Columnas en Escritorio + Nota Provisional -->
+  <MesasCatalog />
+
+  <!-- Franja de Consulta por WhatsApp -->
+  <MesasPreFooter />
 </MainLayout>

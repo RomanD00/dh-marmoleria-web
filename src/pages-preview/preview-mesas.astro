@@ -1,0 +1,29 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import MesasHero from '../components/MesasHero.astro';
+import MesasCatalog from '../components/MesasCatalog.astro';
+import MesasPreFooter from '../components/MesasPreFooter.astro';
+---
+
+<MainLayout
+  title="Catálogo de Mesas de Arrime | Dodera Hermanos Marmolería"
+  description="Colección de mesas de arrime donde la estructura de hierro y la piedra natural se encuentran en un lenguaje contemporáneo, sobrio y atemporal."
+  canonicalPath="/preview-mesas"
+  ogImage="/assets/mesas/modelo-01.jpg"
+  headerTheme="light"
+  activeNav="Catálogo"
+  noIndex={true}
+  breadcrumbs={[
+    { name: 'Inicio', path: '/' },
+    { name: 'Mesas de Arrime', path: '/preview-mesas' }
+  ]}
+>
+  <!-- Hero Compacto Editorial con Recorte Orgánico -->
+  <MesasHero />
+
+  <!-- Grilla Editorial de 2 Columnas en Escritorio + Nota Provisional -->
+  <MesasCatalog />
+
+  <!-- Franja de Consulta por WhatsApp -->
+  <MesasPreFooter />
+</MainLayout>

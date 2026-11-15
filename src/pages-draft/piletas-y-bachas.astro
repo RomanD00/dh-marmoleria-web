@@ -1,32 +1,29 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import PageHero from '../components/PageHero.astro';
-import CatalogDetailSection from '../components/CatalogDetailSection.astro';
-import DiferencialesSection from '../components/DiferencialesSection.astro';
-import ArquitectosSection from '../components/ArquitectosSection.astro';
-import FaqSection from '../components/FaqSection.astro';
-import { PILETAS_ITEMS } from '../data/catalogos';
+import PiletasHero from '../components/PiletasHero.astro';
+import PiletasCatalog from '../components/PiletasCatalog.astro';
+import PreFooterConsultation from '../components/PreFooterConsultation.astro';
 ---
 
 <MainLayout
-  title="Piletas y Bachas Armadas a Medida en Piedra y Acero | Dodera Hermanos Marmolería"
-  description="Fabricación de bachas armadas a medida en mármol, cuarzo, granito y sinterizados con encuentros a 45°. Provisión y colocación de piletas de acero inoxidable Johnson y Neue."
-  canonicalPath="/piletas-y-bachas"
-  ogImage="/assets/catalogos/02-piletas.jpg"
-  includeFaqSchema={true}
+  title="Catálogo de Piletas y Bachas | Dodera Hermanos Marmolería"
+  description="Explorá nuestra selección de piletas y bachas en acero inoxidable Johnson y Neue para mesadas e islas de cocina, con traforo rectificado en taller."
+  canonicalPath="/preview-piletas"
+  ogImage="/assets/piletas/johnson-luxor-si85.jpg"
+  headerTheme="light"
+  activeNav="Catálogo"
+  noIndex={true}
   breadcrumbs={[
     { name: 'Inicio', path: '/' },
-    { name: 'Piletas y Bachas', path: '/piletas-y-bachas' }
+    { name: 'Catálogo de Piletas', path: '/preview-piletas' }
   ]}
 >
-  <PageHero
-    eyebrow="02. CATÁLOGO DE PILETAS"
-    title="Piletas y bachas integradas con precisión milimétrica."
-    lead="Realizamos bachas armadas en la misma piedra de tu mesada y colocamos piletas de acero inoxidable de las líneas Johnson y Neue con terminación de traforo rectificada en taller."
-    breadcrumbCurrent="Piletas y Bachas"
-  />
-  <CatalogDetailSection items={PILETAS_ITEMS} />
-  <DiferencialesSection />
-  <ArquitectosSection />
-  <FaqSection />
+  <!-- Hero Compacto Editorial según Mockup Aprobado -->
+  <PiletasHero />
+
+  <!-- Grilla de Catálogo con Filtro Instantáneo de Marcas (Todas / Johnson / Neue) -->
+  <PiletasCatalog />
+
+  <!-- Franja Pre-Footer de Asesoramiento Personalizado -->
+  <PreFooterConsultation />
 </MainLayout>

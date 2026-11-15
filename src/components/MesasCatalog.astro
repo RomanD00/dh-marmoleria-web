@@ -1,0 +1,98 @@
+---
+import MesaCard from './MesaCard.astro';
+import { MESAS_MODELS, MESAS_PROVISIONAL_NOTE } from '../data/mesas';
+---
+
+<section
+  class="mesas-catalog-section"
+  id="catalogo-mesas"
+  aria-label="Catálogo de Mesas de Arrime"
+>
+  <div class="container container-wide mesas-catalog-container">
+    <!-- Grilla Editorial de 2 Columnas en Escritorio / 1 Columna en Móvil -->
+    <div
+      class="mesas-grid"
+      id="mesasCatalogGrid"
+      role="region"
+      aria-label="Colección de modelos de mesas de arrime"
+    >
+      {
+        MESAS_MODELS.map((model, index) => (
+          <MesaCard model={model} index={index} />
+        ))
+      }
+    </div>
+
+    <!-- Nota Única de Provisionalidad con Líneas Laterales (Según Mockup) -->
+    <div class="mesas-provisional-banner" role="note">
+      <span class="provisional-line" aria-hidden="true"></span>
+      <p class="provisional-text">{MESAS_PROVISIONAL_NOTE}</p>
+      <span class="provisional-line" aria-hidden="true"></span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mesas-catalog-section {
+    background-color: var(--color-bg-warm, #F9F8F5);
+    padding: 8px 0 24px 0;
+  }
+
+  .mesas-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: clamp(24px, 2.5vw, 36px);
+    row-gap: clamp(28px, 3vw, 42px);
+    width: 100%;
+  }
+
+  /* Nota General de Provisionalidad (Estilo Editorial Mockup) */
+  .mesas-provisional-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 38px;
+    padding: 6px 0;
+  }
+
+  .provisional-line {
+    flex: 1;
+    max-width: 180px;
+    height: 1px;
+    background-color: rgba(18, 18, 16, 0.13);
+  }
+
+  .provisional-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 1.35vw, 1.15rem);
+    font-style: italic;
+    font-weight: 500;
+    color: #3D3B37;
+    text-align: center;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 768px) {
+    .mesas-grid {
+      grid-template-columns: 1fr;
+      row-gap: 32px;
+    }
+
+    .mesas-provisional-banner {
+      margin-top: 28px;
+      gap: 14px;
+    }
+
+    .provisional-line {
+      max-width: 48px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .provisional-line {
+      display: none;
+    }
+  }
+</style>

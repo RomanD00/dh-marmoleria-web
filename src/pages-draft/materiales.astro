@@ -1,32 +1,28 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import PageHero from '../components/PageHero.astro';
-import CatalogDetailSection from '../components/CatalogDetailSection.astro';
-import DiferencialesSection from '../components/DiferencialesSection.astro';
-import ArquitectosSection from '../components/ArquitectosSection.astro';
-import FaqSection from '../components/FaqSection.astro';
-import { MATERIALES_ITEMS } from '../data/catalogos';
+import MaterialesCatalog from '../components/MaterialesCatalog.astro';
+import PreFooterConsultation from '../components/PreFooterConsultation.astro';
+import { MATERIALES_PREFOOTER_CONTENT } from '../data/materiales';
 ---
 
 <MainLayout
-  title="Catálogo de Materiales: Mármol, Granito, Cuarzo y Sinterizados | Dodera Hermanos Marmolería"
-  description="Conocé nuestra selección de piedras naturales y superficies de ingeniería: Mármol Calacatta y Carrara, Granito natural de 2 cm, Cuarzo y Superficies Sinterizadas en CABA y GBA."
-  canonicalPath="/materiales"
-  ogImage="/assets/catalogos/01-materiales.jpg"
-  includeFaqSchema={true}
+  title="Catálogo de Materiales | Dodera Hermanos Marmolería"
+  description="Cuatro familias de superficies: Granito, Cuarzo, Sinterizados y Mármol natural para dar vida a tu espacio."
+  canonicalPath="/preview-materiales"
+  ogImage="/assets/materiales/01-granito.jpg"
+  headerTheme="light"
+  activeNav="Catálogo"
+  noIndex={true}
   breadcrumbs={[
     { name: 'Inicio', path: '/' },
-    { name: 'Materiales', path: '/materiales' }
+    { name: 'Catálogo de Materiales', path: '/preview-materiales' }
   ]}
 >
-  <PageHero
-    eyebrow="01. CATÁLOGO DE PIEDRAS"
-    title="Materiales nobles para espacios únicos."
-    lead="Seleccionamos placas de mármol natural, granito de 2 cm, cuarzo y superficies sinterizadas de alta gama. Asesoramos técnicamente cada proyecto residencial o comercial en CABA y GBA."
-    breadcrumbCurrent="Materiales"
+  <MaterialesCatalog />
+
+  <PreFooterConsultation
+    question={MATERIALES_PREFOOTER_CONTENT.question}
+    actionLabel={MATERIALES_PREFOOTER_CONTENT.actionLabel}
+    actionMessage={MATERIALES_PREFOOTER_CONTENT.actionMessage}
   />
-  <CatalogDetailSection items={MATERIALES_ITEMS} />
-  <DiferencialesSection />
-  <ArquitectosSection />
-  <FaqSection />
 </MainLayout>

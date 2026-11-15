@@ -1,0 +1,270 @@
+---
+import type { PiletaProduct } from '../data/piletas';
+
+export interface Props {
+  product: PiletaProduct;
+  index: number;
+}
+
+const { product, index } = Astro.props;
+---
+
+<article
+  class="product-card"
+  data-brand={product.brand}
+  data-product-id={product.id}
+  id={`product-${product.id}`}
+>
+  <a
+    href={product.whatsappUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="product-card-link"
+    aria-label={`Consultar por ${product.name} (${product.brandLabel})`}
+  >
+    <!-- Fotografía / Esquema Técnico del Producto -->
+    <div class="product-card-media">
+      <img
+        src={product.image}
+        alt={product.imageAlt}
+        class="product-card-img"
+        loading={index < 3 ? 'eager' : 'lazy'}
+        decoding="async"
+        width="800"
+        height="600"
+      />
+    </div>
+
+    <!-- Barra Inferior de Información: Número, Marca, Modelo y Flecha -->
+    <div class="product-card-footer">
+      <div class="product-num-col" aria-hidden="true">
+        <span class="product-num">{product.num}</span>
+      </div>
+
+      <div class="product-divider" aria-hidden="true"></div>
+
+      <div class="product-info-col">
+        <h3 class="product-title">{product.name}</h3>
+        <p class="product-brand">{product.brandLabel}</p>
+      </div>
+
+      <div class="product-action-col" aria-hidden="true">
+        <span class="product-arrow-btn">
+          <svg
+            class="arrow-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <polyline points="13 5 20 12 13 19"></polyline>
+          </svg>
+        </span>
+      </div>
+    </div>
+  </a>
+</article>
+
+<style>
+  .product-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(18, 18, 16, 0.08);
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 0.2s ease,
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.3s ease;
+    overflow: hidden;
+  }
+
+  .product-card.is-filter-fading {
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+  }
+
+  .product-card.is-filter-hidden {
+    display: none;
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(119, 53, 8, 0.3);
+    box-shadow: 0 16px 36px -12px rgba(18, 18, 16, 0.1);
+  }
+
+  .product-card-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+    outline: none;
+  }
+
+  .product-card-link:focus-visible {
+    outline: 2px solid var(--color-terracotta, #773508);
+    outline-offset: 3px;
+  }
+
+  /* MEDIA / FOTOGRAFÍA / ESQUEMA TÉCNICO */
+  .product-card-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background-color: #F6F3ED;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+
+  .product-card:hover .product-card-img {
+    transform: scale(1.035);
+  }
+
+  /* BARRA INFERIOR DE INFORMACIÓN */
+  .product-card-footer {
+    display: flex;
+    align-items: center;
+    background-color: #FAF9F6;
+    border-top: 1px solid rgba(18, 18, 16, 0.08);
+    padding: 16px 20px;
+    min-height: 80px;
+    transition: background-color 0.25s ease;
+  }
+
+  .product-card:hover .product-card-footer {
+    background-color: #FFFFFF;
+  }
+
+  .product-num-col {
+    display: flex;
+    align-items: center;
+    padding-right: 14px;
+    flex-shrink: 0;
+  }
+
+  .product-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #706E6B;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .product-divider {
+    width: 1px;
+    height: 38px;
+    background-color: rgba(18, 18, 16, 0.12);
+    margin-right: 16px;
+    flex-shrink: 0;
+  }
+
+  .product-info-col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .product-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #121210;
+    margin: 0 0 2px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.25s ease;
+  }
+
+  .product-card:hover .product-title {
+    color: var(--color-terracotta, #773508);
+  }
+
+  .product-brand {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #706E6B;
+    margin: 0;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .product-action-col {
+    padding-left: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .product-arrow-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: transparent;
+    color: #121210;
+    border: 1px solid transparent;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .arrow-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.25s ease;
+  }
+
+  .product-card:hover .product-arrow-btn {
+    background-color: var(--color-terracotta, #773508);
+    color: #FFFFFF;
+    border-color: var(--color-terracotta, #773508);
+    transform: scale(1.05);
+  }
+
+  .product-card:hover .arrow-icon {
+    transform: translateX(2px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .product-card,
+    .product-card-img,
+    .product-arrow-btn,
+    .arrow-icon {
+      transition: none !important;
+      transform: none !important;
+    }
+  }
+</style>

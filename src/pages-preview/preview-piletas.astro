@@ -1,0 +1,29 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PiletasHero from '../components/PiletasHero.astro';
+import PiletasCatalog from '../components/PiletasCatalog.astro';
+import PreFooterConsultation from '../components/PreFooterConsultation.astro';
+---
+
+<MainLayout
+  title="Catálogo de Piletas y Bachas | Dodera Hermanos Marmolería"
+  description="Explorá nuestra selección de piletas y bachas en acero inoxidable Johnson y Neue para mesadas e islas de cocina, con traforo rectificado en taller."
+  canonicalPath="/preview-piletas"
+  ogImage="/assets/piletas/johnson-luxor-si85.jpg"
+  headerTheme="light"
+  activeNav="Catálogo"
+  noIndex={true}
+  breadcrumbs={[
+    { name: 'Inicio', path: '/' },
+    { name: 'Catálogo de Piletas', path: '/preview-piletas' }
+  ]}
+>
+  <!-- Hero Compacto Editorial según Mockup Aprobado -->
+  <PiletasHero />
+
+  <!-- Grilla de Catálogo con Filtro Instantáneo de Marcas (Todas / Johnson / Neue) -->
+  <PiletasCatalog />
+
+  <!-- Franja Pre-Footer de Asesoramiento Personalizado -->
+  <PreFooterConsultation />
+</MainLayout>

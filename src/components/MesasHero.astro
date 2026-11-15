@@ -1,0 +1,186 @@
+---
+import { MESAS_HERO_CONTENT } from '../data/mesas';
+
+export interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+}
+
+const {
+  eyebrow = MESAS_HERO_CONTENT.eyebrow,
+  title = MESAS_HERO_CONTENT.title,
+  description = MESAS_HERO_CONTENT.description
+} = Astro.props;
+---
+
+<section class="mesas-hero" aria-labelledby="mesas-hero-title">
+  <div class="container container-wide mesas-hero-container">
+    <!-- Columna Izquierda: Jerarquía Editorial -->
+    <div class="mesas-hero-text">
+      <div class="mesas-eyebrow-row">
+        <span class="mesas-eyebrow-rule" aria-hidden="true"></span>
+        <span class="mesas-eyebrow">{eyebrow}</span>
+      </div>
+
+      <h1 class="mesas-hero-title" id="mesas-hero-title">
+        Piezas que<br />transforman<br />espacios.
+      </h1>
+
+      <p class="mesas-hero-desc">
+        {description}
+      </p>
+    </div>
+
+    <!-- Columna Derecha: Fotografía Editorial con Recorte Orgánico -->
+    <div class="mesas-hero-visual">
+      <div class="mesas-arch-wrapper">
+        <img
+          src={MESAS_HERO_CONTENT.image}
+          alt={MESAS_HERO_CONTENT.imageAlt}
+          class="mesas-arch-img"
+          width="933"
+          height="591"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mesas-hero {
+    background-color: var(--color-bg-warm, #F9F8F5);
+    padding-top: calc(var(--header-height, 90px) + 20px);
+    padding-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mesas-hero-container {
+    display: grid;
+    grid-template-columns: 0.92fr 1.08fr;
+    align-items: end;
+    gap: 32px;
+  }
+
+  /* Columna de Texto */
+  .mesas-hero-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 18px;
+    max-width: 500px;
+  }
+
+  .mesas-eyebrow-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .mesas-eyebrow-rule {
+    display: inline-block;
+    width: 38px;
+    height: 1.5px;
+    background-color: #8B5E3C;
+    flex-shrink: 0;
+  }
+
+  .mesas-eyebrow {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #2B2927;
+  }
+
+  .mesas-hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.75rem, 4.6vw, 4.15rem);
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: #121210;
+    margin: 0 0 22px 0;
+  }
+
+  .mesas-hero-desc {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.02rem;
+    line-height: 1.56;
+    color: #3A3835;
+    margin: 0;
+    max-width: 470px;
+  }
+
+  /* Columna Derecha: Visual con Recorte Orgánico */
+  .mesas-hero-visual {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 100%;
+  }
+
+  .mesas-arch-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 680px;
+    aspect-ratio: 311 / 197;
+    overflow: hidden;
+  }
+
+  .mesas-arch-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right bottom;
+    display: block;
+  }
+
+  @media (max-width: 992px) {
+    .mesas-hero-container {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .mesas-hero-text {
+      padding-bottom: 0;
+      max-width: 100%;
+    }
+
+    .mesas-arch-wrapper {
+      max-width: 540px;
+      margin-left: auto;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .mesas-hero {
+      padding-top: calc(var(--header-height, 68px) + 18px);
+      padding-bottom: 20px;
+    }
+
+    .mesas-eyebrow-row {
+      margin-bottom: 14px;
+    }
+
+    .mesas-hero-title {
+      font-size: 2.55rem;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .mesas-hero-desc {
+      font-size: 0.9375rem;
+      line-height: 1.52;
+    }
+
+    .mesas-arch-wrapper {
+      max-width: 100%;
+    }
+  }
+</style>

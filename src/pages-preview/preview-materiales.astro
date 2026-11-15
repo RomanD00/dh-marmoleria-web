@@ -1,0 +1,28 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import MaterialesCatalog from '../components/MaterialesCatalog.astro';
+import PreFooterConsultation from '../components/PreFooterConsultation.astro';
+import { MATERIALES_PREFOOTER_CONTENT } from '../data/materiales';
+---
+
+<MainLayout
+  title="Catálogo de Materiales | Dodera Hermanos Marmolería"
+  description="Cuatro familias de superficies: Granito, Cuarzo, Sinterizados y Mármol natural para dar vida a tu espacio."
+  canonicalPath="/preview-materiales"
+  ogImage="/assets/materiales/01-granito.jpg"
+  headerTheme="light"
+  activeNav="Catálogo"
+  noIndex={true}
+  breadcrumbs={[
+    { name: 'Inicio', path: '/' },
+    { name: 'Catálogo de Materiales', path: '/preview-materiales' }
+  ]}
+>
+  <MaterialesCatalog />
+
+  <PreFooterConsultation
+    question={MATERIALES_PREFOOTER_CONTENT.question}
+    actionLabel={MATERIALES_PREFOOTER_CONTENT.actionLabel}
+    actionMessage={MATERIALES_PREFOOTER_CONTENT.actionMessage}
+  />
+</MainLayout>

@@ -11,6 +11,9 @@ export interface Props {
   ogImage?: string;
   includeFaqSchema?: boolean;
   breadcrumbs?: BreadcrumbItem[];
+  headerTheme?: 'dark' | 'light';
+  activeNav?: string;
+  noIndex?: boolean;
 }
 
 const {
@@ -19,13 +22,18 @@ const {
   canonicalPath,
   ogImage,
   includeFaqSchema = false,
-  breadcrumbs = []
+  breadcrumbs = [],
+  headerTheme = 'dark',
+  activeNav = 'Inicio',
+  noIndex = false
 } = Astro.props;
 ---
 
 <!DOCTYPE html>
 <html lang="es">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <SEO
       title={title}
       description={description}
@@ -33,11 +41,12 @@ const {
       ogImage={ogImage}
       includeFaqSchema={includeFaqSchema}
       breadcrumbs={breadcrumbs}
+      noIndex={noIndex}
     />
   </head>
   <body>
     <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
-    <Header />
+    <Header theme={headerTheme} activeNav={activeNav} />
     <main id="main-content">
       <slot />
     </main>

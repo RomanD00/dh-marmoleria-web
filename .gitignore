@@ -40,6 +40,8 @@ $RECYCLE.BIN/
 *~
 
 # Capturas y archivos de prueba temporales en raíz
+/*.png
+/*.py
 render_1440_pass*.png
 *_test.png
 *_zoom*.png

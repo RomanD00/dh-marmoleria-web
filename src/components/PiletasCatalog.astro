@@ -1,0 +1,138 @@
+---
+import BrandFilter from './BrandFilter.astro';
+import ProductCard from './ProductCard.astro';
+import { PILETAS_PRODUCTS } from '../data/piletas';
+---
+
+<section class="piletas-catalog-section" id="catalogo-piletas" aria-label="Catálogo de Piletas y Bachas">
+  <!-- Barra de Filtros Minimalista (aria-pressed) -->
+  <BrandFilter />
+
+  <!-- Nota General Única de Demostración (Fuera de la Grilla) -->
+  <div class="container container-wide catalog-note-wrapper">
+    <div class="catalog-provisional-note" role="note">
+      <span class="note-bullet" aria-hidden="true"></span>
+      <p class="note-text">
+        Modelos ilustrativos de referencia para validación visual. El catálogo comercial definitivo de Johnson y Neue se encuentra en proceso de confirmación oficial.
+      </p>
+    </div>
+  </div>
+
+  <!-- Anunciador dinámico para tecnologías de asistencia -->
+  <div class="sr-only" aria-live="polite" aria-atomic="true" id="filterLiveStatus">
+    Mostrando todos los modelos disponibles ({PILETAS_PRODUCTS.length} opciones).
+  </div>
+
+  <!-- Grilla de Productos de Alta Escala (Contenedor Máximo 1440px) -->
+  <div class="container container-wide catalog-container">
+    <div
+      class="piletas-grid"
+      id="piletasCatalogGrid"
+      role="region"
+      aria-label="Listado de modelos de piletas"
+    >
+      {
+        PILETAS_PRODUCTS.map((product, index) => (
+          <ProductCard product={product} index={index} />
+        ))
+      }
+    </div>
+
+    <!-- Mensaje accesible en caso de filtro vacío -->
+    <div class="filter-empty-state" id="filterEmptyState" hidden>
+      <p class="empty-state-text">No se encontraron modelos para la marca seleccionada.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .piletas-catalog-section {
+    background-color: var(--color-bg-warm, #F9F8F5);
+    padding-bottom: 80px;
+  }
+
+  /* NOTA GENERAL ÚNICA DE DEMOSTRACIÓN */
+  .catalog-note-wrapper {
+    margin-bottom: 24px;
+  }
+
+  .catalog-provisional-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    background-color: rgba(18, 18, 16, 0.03);
+    border: 1px solid rgba(18, 18, 16, 0.08);
+    border-radius: 4px;
+  }
+
+  .note-bullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-terracotta, #773508);
+    flex-shrink: 0;
+  }
+
+  .note-text {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.75rem;
+    color: #706E6B;
+    margin: 0;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+  }
+
+  .catalog-container {
+    position: relative;
+  }
+
+  /* GRILLA DE PRODUCTOS RESPONSIVE */
+  .piletas-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    align-items: stretch;
+  }
+
+  .filter-empty-state {
+    padding: 60px 20px;
+    text-align: center;
+  }
+
+  .empty-state-text {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1rem;
+    color: #706E6B;
+  }
+
+  @media (max-width: 1024px) {
+    .piletas-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .piletas-catalog-section {
+      padding-bottom: 48px;
+    }
+
+    .catalog-note-wrapper {
+      margin-bottom: 18px;
+    }
+
+    .catalog-provisional-note {
+      padding: 6px 12px;
+    }
+
+    .note-text {
+      font-size: 0.6875rem;
+    }
+
+    .piletas-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+</style>

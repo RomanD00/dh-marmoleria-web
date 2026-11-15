@@ -1,6 +1,6 @@
 ---
 import { SITE_CONFIG } from '../config/site';
-import { FAQ_ITEMS } from '../data/faqs';
+import { FAQ_ITEMS, FAQ_IS_PLACEHOLDER } from '../data/faqs';
 
 export interface BreadcrumbItem {
   name: string;
@@ -14,6 +14,7 @@ export interface Props {
   ogImage?: string;
   includeFaqSchema?: boolean;
   breadcrumbs?: BreadcrumbItem[];
+  noIndex?: boolean;
 }
 
 const {
@@ -22,7 +23,8 @@ const {
   canonicalPath = Astro.url.pathname,
   ogImage = SITE_CONFIG.ogImage,
   includeFaqSchema = false,
-  breadcrumbs = []
+  breadcrumbs = [],
+  noIndex = false
 } = Astro.props;
 
 const cleanPath = canonicalPath === '/' ? '/' : canonicalPath.replace(/\/$/, '');
@@ -48,7 +50,8 @@ const businessSchema = {
   sameAs: [SITE_CONFIG.social.instagramUrl, SITE_CONFIG.social.facebookUrl]
 };
 
-const faqSchema = includeFaqSchema
+const faqSchema =
+  includeFaqSchema && !FAQ_IS_PLACEHOLDER
   ? {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
@@ -78,12 +81,10 @@ const breadcrumbSchema =
     : null;
 ---
 
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <meta name="theme-color" content="#121210" />
-<meta name="robots" content="index, follow" />
+<meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow"} />
 
 <title>{title}</title>
 <meta name="description" content={description} />
