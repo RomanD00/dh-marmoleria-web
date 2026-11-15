@@ -7,6 +7,12 @@
 
 import { getWhatsAppUrl } from '../config/site';
 
+/**
+ * Flag global para la beta privada: las fotografías actuales de materiales y el hero
+ * son imágenes de referencia/ilustrativas pendientes de curación definitiva con obra propia.
+ */
+export const MATERIALES_MEDIA_IS_PROVISIONAL = true;
+
 export interface MaterialFamily {
   id: string;
   num: string;
@@ -15,6 +21,7 @@ export interface MaterialFamily {
   image: string;
   imageAlt: string;
   whatsappUrl: string;
+  isProvisionalPhoto?: boolean;
 }
 
 export const MATERIALES_HERO_CONTENT = {
@@ -22,7 +29,8 @@ export const MATERIALES_HERO_CONTENT = {
   title: 'El carácter de cada material.',
   description: 'Cuatro familias de superficies, distintas formas de dar vida a un espacio.',
   image: '/assets/materiales/hero-materiales.jpg',
-  imageAlt: 'Corte arquitectónico de piedra travertino natural en taller'
+  imageAlt: 'Corte arquitectónico de piedra travertino natural en taller',
+  isProvisionalPhoto: true
 } as const;
 
 export const MATERIALES_FAMILIES: MaterialFamily[] = [

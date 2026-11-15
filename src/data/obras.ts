@@ -5,6 +5,12 @@
  * ==========================================================================
  */
 
+/**
+ * Flag de beta privada: las tarjetas actuales de 02 / Obras muestran fotos de referencia
+ * hasta recibir la selección final de obras reales para la Galería definitiva.
+ */
+export const OBRAS_GALLERY_IS_PROVISIONAL = true;
+
 export interface ObraItem {
   id: string;
   title: string;
@@ -12,6 +18,7 @@ export interface ObraItem {
   image: string;
   imageAlt: string;
   category?: string;
+  isProvisionalPhoto?: boolean;
 }
 
 export const OBRAS_DESTACADAS: ObraItem[] = [

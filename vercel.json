@@ -6,6 +6,12 @@
   "redirects": [
     {
       "source": "/preview-(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "^(?:www\\.)?dh(?:marmoleria|marmoles)\\.com\\.ar$"
+        }
+      ],
       "destination": "/",
       "permanent": false
     },
@@ -62,6 +68,19 @@
         {
           "key": "Content-Security-Policy",
           "value": "default-src 'self'; object-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;"
+        }
+      ]
+    },
+    {
+      "source": "/preview-(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive, nosnippet"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "private, no-cache, no-store, must-revalidate"
         }
       ]
     },

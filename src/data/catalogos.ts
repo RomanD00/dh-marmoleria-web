@@ -8,6 +8,12 @@
 
 import { CATALOGS_PUBLISHED, getWhatsAppUrl, isPreviewEnvironment } from '../config/site';
 
+/**
+ * Flag de beta privada: las imágenes de las tarjetas de portada en 01 / Catálogos
+ * representan modelos e instalaciones de referencia provisionales.
+ */
+export const CATALOGOS_HOME_MEDIA_IS_PROVISIONAL = true;
+
 export interface CatalogHomeCard {
   num: string;
   title: string;
@@ -18,6 +24,7 @@ export interface CatalogHomeCard {
   publishedHref: string;
   whatsappMessage: string;
   isWide?: boolean;
+  isProvisionalPhoto?: boolean;
 }
 
 /**

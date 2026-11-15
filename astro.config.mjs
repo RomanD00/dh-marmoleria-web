@@ -1,8 +1,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// Detecta si se solicitó explícitamente habilitar rutas de vista previa
+// Detecta si se solicitó explícitamente habilitar rutas de vista previa (o deploy Vercel Preview)
 const isPreviewAllowed =
+  process.env.VERCEL_ENV === 'preview' ||
   process.env.ENABLE_PREVIEW === 'true' ||
   process.argv.includes('--preview') ||
   process.argv.includes('preview');

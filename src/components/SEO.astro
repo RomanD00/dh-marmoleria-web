@@ -1,5 +1,5 @@
 ---
-import { SITE_CONFIG } from '../config/site';
+import { SITE_CONFIG, isPreviewEnvironment } from '../config/site';
 import { FAQ_ITEMS, FAQ_IS_PLACEHOLDER } from '../data/faqs';
 
 export interface BreadcrumbItem {
@@ -84,7 +84,7 @@ const breadcrumbSchema =
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <meta name="theme-color" content="#121210" />
-<meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow"} />
+<meta name="robots" content={noIndex || isPreviewEnvironment() ? "noindex, nofollow" : "index, follow"} />
 
 <title>{title}</title>
 <meta name="description" content={description} />

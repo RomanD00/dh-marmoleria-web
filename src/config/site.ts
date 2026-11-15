@@ -86,6 +86,7 @@ export const CONTACT_PAGE_PUBLISHED = false;
 export function isPreviewEnvironment(): boolean {
   return (
     import.meta.env.DEV ||
+    process.env.VERCEL_ENV === 'preview' ||
     process.env.ENABLE_PREVIEW === 'true' ||
     process.argv.includes('--preview') ||
     process.argv.includes('preview')
