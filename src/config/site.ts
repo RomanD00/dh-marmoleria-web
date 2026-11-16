@@ -93,6 +93,7 @@ export const GALERIA_PAGE_PUBLISHED = false;
 export function isPreviewEnvironment(): boolean {
   return (
     import.meta.env.DEV ||
+    import.meta.env.VERCEL_ENV === 'preview' ||
     process.env.VERCEL_ENV === 'preview' ||
     process.env.ENABLE_PREVIEW === 'true' ||
     process.argv.includes('--preview') ||

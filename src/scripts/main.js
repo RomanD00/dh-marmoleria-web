@@ -36,26 +36,92 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 2. MENÚ MÓVIL (Toggle & Accesibilidad por Teclado)
+  // 2. MENÚ MÓVIL (Toggle, Scroll Lock, Focus Management & Accesibilidad)
   // --------------------------------------------------------------------------
   const mobileToggle = document.getElementById('mobileToggle');
   const mainNav = document.getElementById('mainNav');
+  const catalogDropdownItem = document.getElementById('catalogDropdownItem');
+  const catalogDropdownBtn = document.getElementById('catalogDropdownBtn');
+
+  const closeCatalogDropdown = () => {
+    if (!catalogDropdownItem || !catalogDropdownBtn) return;
+    catalogDropdownItem.classList.remove('is-open');
+    catalogDropdownBtn.setAttribute('aria-expanded', 'false');
+  };
+
+  const openCatalogDropdown = () => {
+    if (!catalogDropdownItem || !catalogDropdownBtn) return;
+    catalogDropdownItem.classList.add('is-open');
+    catalogDropdownBtn.setAttribute('aria-expanded', 'true');
+  };
 
   if (mobileToggle && mainNav) {
-    const closeMobileMenu = () => {
+    const getMobileFocusableItems = () =>
+      Array.from(mainNav.querySelectorAll('a[href], button:not([disabled])')).filter(
+        (el) => el.getClientRects().length > 0
+      );
+
+    const openMobileMenu = () => {
+      mainNav.classList.add('is-active');
+      mainNav.scrollTop = 0;
+      mobileToggle.classList.add('is-active');
+      mobileToggle.setAttribute('aria-expanded', 'true');
+      mobileToggle.setAttribute('aria-label', 'Cerrar menú');
+      if (header) header.classList.add('is-menu-open');
+      document.body.classList.add('mobile-menu-open');
+    };
+
+    const closeMobileMenu = ({ restoreFocus = false } = {}) => {
       mainNav.classList.remove('is-active');
       mobileToggle.classList.remove('is-active');
       mobileToggle.setAttribute('aria-expanded', 'false');
+      mobileToggle.setAttribute('aria-label', 'Abrir menú');
+      if (header) header.classList.remove('is-menu-open');
+      document.body.classList.remove('mobile-menu-open');
+      closeCatalogDropdown();
+      if (restoreFocus) {
+        mobileToggle.focus();
+      }
     };
 
     mobileToggle.addEventListener('click', () => {
       const isExpanded = mobileToggle.getAttribute('aria-expanded') === 'true';
-      mobileToggle.setAttribute('aria-expanded', String(!isExpanded));
-      mobileToggle.classList.toggle('is-active', !isExpanded);
-      mainNav.classList.toggle('is-active', !isExpanded);
+      if (isExpanded) {
+        closeMobileMenu();
+      } else {
+        openMobileMenu();
+      }
     });
 
-    // Cerrar menú móvil al hacer clic en un enlace de navegación
+    // Manejo de foco Tab circular entre botón X y elementos del menú abierto en móvil
+    mobileToggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab' && !e.shiftKey && mainNav.classList.contains('is-active')) {
+        const items = getMobileFocusableItems();
+        if (items.length > 0) {
+          e.preventDefault();
+          items[0].focus();
+        }
+      }
+    });
+
+    mainNav.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab' || !mainNav.classList.contains('is-active')) return;
+      const items = getMobileFocusableItems();
+      if (items.length === 0) return;
+
+      const firstItem = items[0];
+      const lastItem = items[items.length - 1];
+
+      if (e.shiftKey && document.activeElement === firstItem) {
+        e.preventDefault();
+        mobileToggle.focus();
+      } else if (!e.shiftKey && document.activeElement === lastItem) {
+        e.preventDefault();
+        mobileToggle.focus();
+      }
+    });
+
+    // Cerrar menú móvil al hacer clic en cualquier enlace (incluye subitems y CTA WhatsApp)
     const navLinks = mainNav.querySelectorAll('a');
     navLinks.forEach((link) => {
       link.addEventListener('click', () => {
@@ -65,35 +131,33 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Cerrar menú móvil con tecla Escape
+    // Cerrar menú móvil con tecla Escape y restaurar foco en el botón toggle
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && mainNav.classList.contains('is-active')) {
-        closeMobileMenu();
-        mobileToggle.focus();
+        e.preventDefault();
+        closeMobileMenu({ restoreFocus: true });
       }
     });
+
+    // Si pasa a ancho de escritorio mientras estaba abierto, restaurar scroll y cerrar
+    window.addEventListener(
+      'resize',
+      () => {
+        if (window.innerWidth > 768 && mainNav.classList.contains('is-active')) {
+          closeMobileMenu();
+        }
+      },
+      { passive: true }
+    );
   }
 
   // --------------------------------------------------------------------------
   // 2B. MENÚ DESPLEGABLE DE CATÁLOGOS (Mouse, Teclado & Dispositivos Táctiles)
   // --------------------------------------------------------------------------
-  const catalogDropdownItem = document.getElementById('catalogDropdownItem');
-  const catalogDropdownBtn = document.getElementById('catalogDropdownBtn');
-
   if (catalogDropdownItem && catalogDropdownBtn) {
     const dropdownLinks = Array.from(
       catalogDropdownItem.querySelectorAll('.nav-dropdown-link')
     );
-
-    const openCatalogDropdown = () => {
-      catalogDropdownItem.classList.add('is-open');
-      catalogDropdownBtn.setAttribute('aria-expanded', 'true');
-    };
-
-    const closeCatalogDropdown = () => {
-      catalogDropdownItem.classList.remove('is-open');
-      catalogDropdownBtn.setAttribute('aria-expanded', 'false');
-    };
 
     // Soporte Mouse en escritorio (sincroniza estado aria-expanded y clase .is-open)
     catalogDropdownItem.addEventListener('pointerenter', (e) => {
