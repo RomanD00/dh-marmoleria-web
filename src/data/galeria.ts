@@ -38,9 +38,9 @@ export interface GaleriaItem {
 
 export const GALERIA_HERO_CONTENT = {
   eyebrow: 'GALERÍA DE OBRAS',
-  title: 'Cada espacio, una expresión única.',
+  title: 'Galería de obras.',
   description:
-    'Explorá nuestra selección visual de espacios, materiales y posibilidades de diseño en piedra.',
+    'Conocé diferentes aplicaciones de piedra en cocinas, baños y otros espacios.',
   provisionalNotice:
     'Imágenes ilustrativas. Las fotografías de obras realizadas por DH Mármoles se incorporarán próximamente.'
 } as const;

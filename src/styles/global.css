@@ -1137,6 +1137,14 @@ ul, ol {
   margin-bottom: 0;
 }
 
+.obras-lead {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  margin-top: 0.65rem;
+  margin-bottom: 0;
+}
+
 .obras-asymmetric-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.48fr) minmax(0, 1fr);

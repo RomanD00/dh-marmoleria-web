@@ -27,7 +27,7 @@ export interface MaterialFamily {
 export const MATERIALES_HERO_CONTENT = {
   eyebrow: '01 / CATÁLOGO DE MATERIALES',
   title: 'El carácter de cada material.',
-  description: 'Cuatro familias de superficies, distintas formas de dar vida a un espacio.',
+  description: 'Explorá nuestras cuatro familias: granito, cuarzo, sinterizados y mármol.',
   image: '/assets/materiales/hero-materiales.jpg',
   imageAlt: 'Corte arquitectónico de piedra travertino natural en taller',
   isProvisionalPhoto: true

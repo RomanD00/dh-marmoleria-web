@@ -21,7 +21,7 @@ export const CONTACTO_HERO_CONTENT = {
   eyebrow: '04 / CONTACTO',
   title: 'Las grandes ideas empiezan con una conversación.',
   description:
-    'Contanos qué tenés en mente. Te acompañamos con asesoramiento personalizado para encontrar la mejor solución para tu espacio.'
+    'Contanos qué necesitás. Te asesoramos sobre materiales, medidas y opciones para tu proyecto.'
 } as const;
 
 export const CONTACTO_FORM_CONFIG = {

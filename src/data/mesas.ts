@@ -33,9 +33,9 @@ export interface MesaModel {
 
 export const MESAS_HERO_CONTENT = {
   eyebrow: '03 / MESAS DE ARRIME',
-  title: 'Piezas que transforman espacios.',
+  title: 'Mesas de arrime.',
   description:
-    'Una colección de mesas de arrime donde la estructura de hierro y la piedra natural se encuentran en un lenguaje contemporáneo, sobrio y atemporal.',
+    'Mesas con estructura de hierro y tapas de piedra. Conocé los modelos y terminaciones disponibles.',
   image: '/assets/mesas/hero-mesas-arrime.jpg',
   imageAlt:
     'Detalle constructivo de mesa de arrime con tapa de piedra natural veteada sobre estructura de hierro negro'

@@ -100,8 +100,8 @@ export const PILETAS_PRODUCTS: PiletaProduct[] = [
 
 export const PILETAS_HERO_CONTENT = {
   eyebrow: '02 / CATÁLOGO DE PILETAS',
-  title: 'Detalles que completan tu espacio.',
-  description: 'Explorá nuestra selección de piletas y encontrá el modelo adecuado para tu proyecto.',
+  title: 'Piletas y bachas para tu proyecto.',
+  description: 'Conocé los modelos de Johnson y Neue. Te ayudamos a elegir el más adecuado para tu mesada.',
   cadLabels: {
     radius: 'R 420',
     height: '240'
