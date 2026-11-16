@@ -6,7 +6,7 @@
  * ==========================================================================
  */
 
-import { CATALOGS_PUBLISHED, getWhatsAppUrl, isPreviewEnvironment } from '../config/site';
+import { CATALOGS_PUBLISHED, getWhatsAppUrl } from '../config/site';
 
 /**
  * Flag de beta privada: las imágenes de las tarjetas de portada en 01 / Catálogos
@@ -20,7 +20,6 @@ export interface CatalogHomeCard {
   image: string;
   imageAlt: string;
   href: string;
-  previewHref: string;
   publishedHref: string;
   whatsappMessage: string;
   isWide?: boolean;
@@ -28,23 +27,17 @@ export interface CatalogHomeCard {
 }
 
 /**
- * Resuelve el destino de cada tarjeta de catálogo en la Homepage según el entorno:
- * 1. Si CATALOGS_PUBLISHED === true -> ruta definitiva (`/materiales/`, `/piletas-y-bachas/`, `/mesas-de-arrime/`)
- * 2. Si estamos en dev/preview local -> ruta preview (`/preview-materiales`, `/preview-piletas`, `/preview-mesas`)
- * 3. En producción mientras no estén publicados -> destino seguro de consulta por WhatsApp aprobado en la homepage
+ * Resuelve el destino de cada tarjeta de catálogo en la Homepage hacia su ruta definitiva.
  */
 export function resolveCatalogCardHref(card: CatalogHomeCard): string {
   if (CATALOGS_PUBLISHED) {
     return card.publishedHref;
   }
-  if (isPreviewEnvironment()) {
-    return card.previewHref;
-  }
   return card.href;
 }
 
 /**
- * Las 3 tarjetas principales aprobadas para la Homepage (Sección 01. Catálogo)
+ * Las 3 tarjetas principales aprobadas para la Homepage (Sección Catálogo)
  * Regla de diseño: en la homepage muestran únicamente número, título y botón circular.
  */
 export const CATALOG_HOME_CARDS: CatalogHomeCard[] = [
@@ -54,8 +47,7 @@ export const CATALOG_HOME_CARDS: CatalogHomeCard[] = [
     image: '/assets/catalogos/01-materiales.jpg',
     imageAlt: 'Muestrario de materiales: mármol, granito, cuarzo y sinterizados',
     href: getWhatsAppUrl('Hola Dodera Hermanos Marmolería, quisiera conocer el catálogo de Materiales.'),
-    previewHref: '/preview-materiales',
-    publishedHref: '/materiales/',
+    publishedHref: '/materiales',
     whatsappMessage: 'Hola Dodera Hermanos Marmolería, quisiera conocer el catálogo de Materiales.',
     isWide: false
   },
@@ -65,8 +57,7 @@ export const CATALOG_HOME_CARDS: CatalogHomeCard[] = [
     image: '/assets/catalogos/02-piletas.jpg',
     imageAlt: 'Pileta y bacha armada e integrada en mármol con escurridor acanalado',
     href: getWhatsAppUrl('Hola Dodera Hermanos Marmolería, quisiera conocer el catálogo de Piletas.'),
-    previewHref: '/preview-piletas',
-    publishedHref: '/piletas-y-bachas/',
+    publishedHref: '/piletas-y-bachas',
     whatsappMessage: 'Hola Dodera Hermanos Marmolería, quisiera conocer el catálogo de Piletas.',
     isWide: false
   },
@@ -76,8 +67,7 @@ export const CATALOG_HOME_CARDS: CatalogHomeCard[] = [
     image: '/assets/catalogos/03-mesas-arrime.jpg',
     imageAlt: 'Mesa de arrime de diseño con tapa maciza de mármol y base de hierro negro',
     href: getWhatsAppUrl('Hola Dodera Hermanos Marmolería, quisiera conocer el catálogo de Mesas de Arrime.'),
-    previewHref: '/preview-mesas',
-    publishedHref: '/mesas-de-arrime/',
+    publishedHref: '/mesas-de-arrime',
     whatsappMessage: 'Hola Dodera Hermanos Marmolería, quisiera conocer el catálogo de Mesas de Arrime.',
     isWide: true
   }

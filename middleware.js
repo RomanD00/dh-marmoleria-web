@@ -2,19 +2,20 @@
  * ==========================================================================
  * CONTROL DE ACCESO EDGE PARA BETA PRIVADA — DH MÁRMOLES
  * ==========================================================================
- * Protege despliegues Vercel Preview mediante HTTP Basic Authentication cuando
- * se configuran variables de entorno en Vercel (Preview Environment Variables).
+ * Protege despliegues Vercel (tanto `dh-marmoleria-web.vercel.app` en
+ * Producción como Previews) mediante HTTP Basic Authentication cuando se
+ * configuran variables de entorno en Vercel (nunca credenciales en código).
  *
  * Seguridad y límites:
  * - Nunca almacena contraseñas ni tokens en el código fuente.
- * - Nunca bloquea despliegues de Producción (VERCEL_ENV === 'production').
- * - Compatible como capa adicional o alternativa a Vercel Deployment Protection.
- *
- * Variables esperadas en Vercel (solo Preview):
- * - BETA_AUTH_PASSWORD (requerida para activar el candado Basic Auth)
- * - BETA_AUTH_USER (opcional, por defecto: "dh-beta")
- * - BETA_REQUIRE_AUTH ("true" exige contraseña obligatoria; si falta BETA_AUTH_PASSWORD
- *   devuelve 503 fail-closed para evitar exposición accidental en beta privada)
+ * - Mantiene bypass automático para el dominio oficial `dhmarmoleria.com.ar`
+ *   una vez conectado al lanzamiento definitivo (salvo BETA_PROTECT_CUSTOM_DOMAIN=true).
+ * - Para proteger la beta pública en `dh-marmoleria-web.vercel.app` en plan
+ *   Hobby o como refuerzo de Deployment Protection, configurar en Vercel
+ *   Environment Variables (All Environments):
+ *   - BETA_AUTH_PASSWORD (requerida para exigir clave)
+ *   - BETA_AUTH_USER (opcional, por defecto: "dh-beta")
+ *   - BETA_REQUIRE_AUTH ("true" bloquea en 503 fail-closed si faltara clave)
  * ==========================================================================
  */
 
@@ -65,10 +66,12 @@ function decodeBasicCredentials(authHeader) {
 }
 
 export default function middleware(request) {
-  const vercelEnv = (process.env.VERCEL_ENV || '').trim();
+  const host = (request.headers.get('host') || '').toLowerCase();
+  const isOfficialCustomDomain = /^(?:www\.)?dh(?:marmoleria|marmoles)\.com\.ar(?::\d+)?$/.test(host);
 
-  // Nunca interferir con el sitio público en producción
-  if (vercelEnv === 'production') {
+  // Al conectar el dominio oficial en lanzamiento definitivo, permitir acceso público directo
+  // salvo que explícitamente se marque BETA_PROTECT_CUSTOM_DOMAIN=true.
+  if (isOfficialCustomDomain && process.env.BETA_PROTECT_CUSTOM_DOMAIN !== 'true') {
     return passThrough();
   }
 
@@ -76,10 +79,10 @@ export default function middleware(request) {
   const expectedUser = (process.env.BETA_AUTH_USER || 'dh-beta').trim();
   const expectedPassword = process.env.BETA_AUTH_PASSWORD || '';
 
-  // Fail-closed si se marcó BETA_REQUIRE_AUTH=true pero no se definió la clave
+  // Fail-closed si se activó BETA_REQUIRE_AUTH=true pero falta la contraseña
   if (requireAuth && !expectedPassword) {
     return new Response(
-      'Beta privada bloqueada: falta configurar BETA_AUTH_PASSWORD en las variables de entorno Preview de Vercel.',
+      'Beta privada bloqueada: falta configurar BETA_AUTH_PASSWORD en las variables de entorno de Vercel.',
       {
         status: 503,
         headers: {
@@ -91,9 +94,7 @@ export default function middleware(request) {
     );
   }
 
-  // Solo exigir autenticación cuando el entorno Preview o flag explícito tenga clave cargada
-  const shouldProtect = Boolean(expectedPassword) && (vercelEnv === 'preview' || requireAuth);
-  if (!shouldProtect) {
+  if (!expectedPassword) {
     return passThrough();
   }
 

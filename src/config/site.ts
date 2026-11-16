@@ -2,7 +2,6 @@
  * ==========================================================================
  * CONFIGURACIÓN CENTRALIZADA DEL SITIO — DODERA HERMANOS MARMOLERÍA
  * Fuente única de verdad para datos institucionales, WhatsApp, SEO y rutas.
- * Para actualizar teléfono, redes o mensajes, editar únicamente este archivo.
  * ==========================================================================
  */
 
@@ -37,6 +36,20 @@ export const SITE_CONFIG = {
 } as const;
 
 /**
+ * INTERRUPTOR PRINCIPAL DE MODO BETA / LANZAMIENTO DEFINITIVO:
+ * - true:  Emite <meta name="robots" content="noindex, nofollow" /> en todo el sitio
+ *          mientras el contenido está en revisión privada con la clienta.
+ * - false: Habilita la indexación (`index, follow`) en el lanzamiento definitivo.
+ *          (Recordar cambiar también `IS_BETA_MODE` en `astro.config.mjs` y quitar
+ *           el encabezado `X-Robots-Tag` en `vercel.json`).
+ */
+export const IS_BETA_MODE = true;
+
+export const CATALOGS_PUBLISHED = true;
+export const CONTACT_PAGE_PUBLISHED = true;
+export const GALERIA_PAGE_PUBLISHED = true;
+
+/**
  * Genera un enlace seguro de WhatsApp con mensaje prearmado codificado.
  */
 export function getWhatsAppUrl(customMessage?: string): string {
@@ -51,54 +64,15 @@ export interface NavSubItem {
   num: string;
   label: string;
   href: string;
-  previewHref: string;
   publishedHref: string;
 }
 
 export interface NavItem {
   label: string;
   href: string;
-  previewHref?: string;
   publishedHref?: string;
   hasPlus?: boolean;
   children?: NavSubItem[];
-}
-
-/**
- * Controla si las páginas definitivas de los 3 catálogos están publicadas en producción.
- * - false: En build de producción (`npm run build`), no se generan enlaces a `/preview-*`
- *          y se mantienen los destinos seguros aprobados para la homepage.
- * - true:  Cuando se publiquen las páginas definitivas, los enlaces apuntarán a
- *          `/materiales/`, `/piletas-y-bachas/` y `/mesas-de-arrime/`.
- */
-export const CATALOGS_PUBLISHED = false;
-
-/**
- * Controla si la página definitiva de Contacto está publicada en producción.
- * - false: En desarrollo apunta a `/preview-contacto`; en producción conserva `#contacto`.
- * - true:  Cuando se publique la página definitiva, apuntará a `/contacto`.
- */
-export const CONTACT_PAGE_PUBLISHED = false;
-
-/**
- * Controla si la página definitiva de Galería de Obras está publicada en producción.
- * - false: En desarrollo / Vercel Preview apunta a `/preview-galeria`; en producción conserva `#obras`.
- * - true:  Cuando se publique la página definitiva, apuntará a `/galeria`.
- */
-export const GALERIA_PAGE_PUBLISHED = false;
-
-/**
- * Detecta si la compilación o servidor actual corre en entorno local / preview.
- */
-export function isPreviewEnvironment(): boolean {
-  return (
-    import.meta.env.DEV ||
-    import.meta.env.VERCEL_ENV === 'preview' ||
-    process.env.VERCEL_ENV === 'preview' ||
-    process.env.ENABLE_PREVIEW === 'true' ||
-    process.argv.includes('--preview') ||
-    process.argv.includes('preview')
-  );
 }
 
 export const CATALOG_DROPDOWN_ITEMS: NavSubItem[] = [
@@ -107,50 +81,42 @@ export const CATALOG_DROPDOWN_ITEMS: NavSubItem[] = [
     num: '01',
     label: 'Materiales',
     href: '#catalogos',
-    previewHref: '/preview-materiales',
-    publishedHref: '/materiales/'
+    publishedHref: '/materiales'
   },
   {
     id: 'piletas',
     num: '02',
     label: 'Piletas',
     href: '#catalogos',
-    previewHref: '/preview-piletas',
-    publishedHref: '/piletas-y-bachas/'
+    publishedHref: '/piletas-y-bachas'
   },
   {
     id: 'mesas',
     num: '03',
     label: 'Mesas de Arrime',
     href: '#catalogos',
-    previewHref: '/preview-mesas',
-    publishedHref: '/mesas-de-arrime/'
+    publishedHref: '/mesas-de-arrime'
   }
 ];
 
 /**
- * Resuelve el href de un ítem de catálogo en el navbar según el entorno:
- * 1. Si CATALOGS_PUBLISHED === true -> ruta definitiva (`/materiales/`, `/piletas-y-bachas/`, `/mesas-de-arrime/`)
- * 2. Si estamos en dev/preview local -> ruta preview (`/preview-materiales`, `/preview-piletas`, `/preview-mesas`)
- * 3. En producción mientras no estén publicados -> destino seguro en la homepage (`#catalogos` o `/#catalogos`)
+ * Resuelve el href de un ítem de catálogo en el navbar hacia su ruta definitiva.
  */
 export function resolveCatalogNavHref(item: NavSubItem, headerTheme: 'dark' | 'light' = 'dark'): string {
   if (CATALOGS_PUBLISHED) {
     return item.publishedHref;
   }
-  if (isPreviewEnvironment()) {
-    return item.previewHref;
-  }
   return headerTheme === 'light' && item.href.startsWith('#') ? `/${item.href}` : item.href;
 }
 
 /**
- * Resuelve el href de un ítem de primer nivel en el navbar o footer según el entorno:
- * 1. Si tiene ruta publicada habilitada según su flag -> ruta definitiva (`/galeria`, `/contacto`)
- * 2. Si tiene ruta preview y estamos en dev/preview local -> ruta preview (`/preview-galeria`, `/preview-contacto`)
- * 3. En producción mientras no esté publicado -> destino seguro (`#obras`/`/#obras` o `#contacto`/`/#contacto`)
+ * Resuelve el href de un ítem de primer nivel en navbar o footer.
  */
 export function resolveMainNavHref(item: NavItem, headerTheme: 'dark' | 'light' = 'dark'): string {
+  if (item.label === 'Inicio') {
+    return headerTheme === 'light' ? '/' : '#hero';
+  }
+
   const isPublished =
     (item.publishedHref === '/contacto' && CONTACT_PAGE_PUBLISHED) ||
     (item.publishedHref === '/galeria' && GALERIA_PAGE_PUBLISHED);
@@ -158,34 +124,24 @@ export function resolveMainNavHref(item: NavItem, headerTheme: 'dark' | 'light' 
   if (item.publishedHref && isPublished) {
     return item.publishedHref;
   }
-  if (item.previewHref && isPreviewEnvironment()) {
-    return item.previewHref;
-  }
   return headerTheme === 'light' && item.href.startsWith('#') ? `/${item.href}` : item.href;
 }
 
 /**
- * Resuelve el destino de Galería / "Ver todas las obras" según el entorno.
+ * Resuelve el destino de Galería / "Ver todas las obras".
  */
 export function resolveGaleriaHref(headerTheme: 'dark' | 'light' = 'dark'): string {
-  const galeriaItem = MAIN_NAV.find((item) => item.label === 'Galería');
-  if (galeriaItem) {
-    return resolveMainNavHref(galeriaItem, headerTheme);
+  if (GALERIA_PAGE_PUBLISHED) {
+    return '/galeria';
   }
-  if (GALERIA_PAGE_PUBLISHED) return '/galeria';
-  if (isPreviewEnvironment()) return '/preview-galeria';
   return headerTheme === 'light' ? '/#obras' : '#obras';
 }
 
-/**
- * Navegación principal aprobada de la Homepage.
- * Mientras las páginas internas estén en revisión/borrador, las anclas
- * dirigen a las secciones correspondientes de la portada aprobada.
- */
 export const MAIN_NAV: NavItem[] = [
   {
     label: 'Inicio',
-    href: '#hero'
+    href: '#hero',
+    publishedHref: '/'
   },
   {
     label: 'Catálogo',
@@ -196,28 +152,11 @@ export const MAIN_NAV: NavItem[] = [
   {
     label: 'Galería',
     href: '#obras',
-    previewHref: '/preview-galeria',
     publishedHref: '/galeria'
   },
   {
     label: 'Contacto',
     href: '#contacto',
-    previewHref: '/preview-contacto',
     publishedHref: '/contacto'
   }
 ];
-
-/**
- * Plan de arquitectura de rutas futuras para cuando la clienta apruebe
- * el diseño y contenido definitivo de cada sección:
- * - /materiales (4 tarjetas 2x2: Mármol, Granito, Cuarzo, Sinterizado + futuras páginas de detalle)
- * - /piletas-y-bachas (grilla unificada con filtros: Todas, Johnson, Neue)
- * - /mesas-de-arrime (grilla editorial de modelos sin filtros)
- * - /galeria (portafolio completo de obras reales y taller)
- * - /contacto (formulario/atención a estudios y particulares)
- */
-export const FUTURE_CATALOG_ROUTES = [
-  { label: '01. Materiales', href: '/materiales' },
-  { label: '02. Piletas y Bachas', href: '/piletas-y-bachas' },
-  { label: '03. Mesas de Arrime', href: '/mesas-de-arrime' }
-] as const;

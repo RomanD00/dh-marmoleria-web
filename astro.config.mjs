@@ -1,12 +1,24 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// Detecta si se solicitó explícitamente habilitar rutas de vista previa (o deploy Vercel Preview)
-const isPreviewAllowed =
-  process.env.VERCEL_ENV === 'preview' ||
-  process.env.ENABLE_PREVIEW === 'true' ||
-  process.argv.includes('--preview') ||
-  process.argv.includes('preview');
+/**
+ * INTERRUPTOR DE MODO BETA PARA SITEMAP:
+ * - true:  Excluye las páginas provisionales del sitemap público mientras la beta
+ *          sigue en revisión privada con el cliente.
+ * - false: Incluye automáticamente las 6 páginas definitivas en el lanzamiento oficial.
+ *          (Cambiar junto con `IS_BETA_MODE` en `src/config/site.ts` y `vercel.json`).
+ */
+const IS_BETA_MODE = true;
+
+const PROVISIONAL_BETA_PATHS = [
+  '/materiales',
+  '/piletas-y-bachas',
+  '/mesas-de-arrime',
+  '/galeria',
+  '/contacto',
+  '/preview-',
+  '/draft-'
+];
 
 export default defineConfig({
   site: 'https://dhmarmoleria.com.ar',
@@ -18,41 +30,16 @@ export default defineConfig({
     inlineStylesheets: 'never'
   },
   integrations: [
-    {
-      name: 'conditional-preview-routes',
-      hooks: {
-        'astro:config:setup': ({ injectRoute, command }) => {
-          // En desarrollo local (astro dev) o en builds con flag de preview, inyecta la ruta
-          if (command === 'dev' || isPreviewAllowed) {
-            injectRoute({
-              pattern: '/preview-materiales',
-              entrypoint: './src/pages-preview/preview-materiales.astro'
-            });
-            injectRoute({
-              pattern: '/preview-piletas',
-              entrypoint: './src/pages-preview/preview-piletas.astro'
-            });
-            injectRoute({
-              pattern: '/preview-mesas',
-              entrypoint: './src/pages-preview/preview-mesas.astro'
-            });
-            injectRoute({
-              pattern: '/preview-galeria',
-              entrypoint: './src/pages-preview/preview-galeria.astro'
-            });
-            injectRoute({
-              pattern: '/preview-contacto',
-              entrypoint: './src/pages-preview/preview-contacto.astro'
-            });
-          }
-        }
-      }
-    },
     sitemap({
       changefreq: 'monthly',
       priority: 0.8,
       lastmod: new Date(),
-      filter: (page) => !page.includes('/preview-') && !page.includes('/draft-')
+      filter: (page) => {
+        if (IS_BETA_MODE) {
+          return !PROVISIONAL_BETA_PATHS.some((path) => page.includes(path));
+        }
+        return !page.includes('/preview-') && !page.includes('/draft-');
+      }
     })
   ]
 });
