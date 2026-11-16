@@ -3,6 +3,8 @@ import { SITE_CONFIG, MAIN_NAV, getWhatsAppUrl, resolveMainNavHref } from '../co
 
 const contactoNavItem = MAIN_NAV.find((item) => item.label === 'Contacto');
 const contactoHref = contactoNavItem ? resolveMainNavHref(contactoNavItem, 'light') : '/#contacto';
+const galeriaNavItem = MAIN_NAV.find((item) => item.label === 'Galería');
+const galeriaHref = galeriaNavItem ? resolveMainNavHref(galeriaNavItem, 'light') : '/#obras';
 
 const legalLinks = [
   SITE_CONFIG.legal.privacyHref
@@ -107,7 +109,7 @@ const legalLinks = [
           <ul class="footer-nav-list">
             <li><a href="/#hero" class="footer-nav-link">Inicio</a></li>
             <li><a href="/#catalogos" class="footer-nav-link">Catálogo</a></li>
-            <li><a href="/#obras" class="footer-nav-link">Galería</a></li>
+            <li><a href={galeriaHref} class="footer-nav-link">Galería</a></li>
             <li><a href={contactoHref} class="footer-nav-link">Contacto</a></li>
           </ul>
         </nav>

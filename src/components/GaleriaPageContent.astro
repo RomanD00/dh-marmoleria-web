@@ -1,0 +1,494 @@
+---
+import { getWhatsAppUrl } from '../config/site';
+import {
+  GALERIA_HERO_CONTENT,
+  GALERIA_ITEMS,
+  GALERIA_CTA_CONTENT,
+  type GaleriaItem
+} from '../data/galeria';
+
+export interface Props {
+  items?: GaleriaItem[];
+}
+
+const { items = GALERIA_ITEMS } = Astro.props;
+const whatsappUrl = getWhatsAppUrl(GALERIA_CTA_CONTENT.whatsappMessage);
+---
+
+<div class="dh-galeria-page">
+  <!-- Hero Editorial Compacto (Exclusivamente Tipográfico) -->
+  <section class="dh-galeria-hero" aria-labelledby="dh-galeria-hero-title">
+    <div class="container container-wide">
+      <div class="dh-galeria-eyebrow-row">
+        <span class="dh-galeria-rule-short" aria-hidden="true"></span>
+        <span class="dh-galeria-eyebrow">{GALERIA_HERO_CONTENT.eyebrow}</span>
+      </div>
+
+      <h1 class="dh-galeria-hero-title" id="dh-galeria-hero-title">
+        Cada espacio,<br />una expresión única.
+      </h1>
+
+      <p class="dh-galeria-hero-desc">
+        {GALERIA_HERO_CONTENT.description}
+      </p>
+
+      <div class="dh-galeria-meta-bar">
+        <span class="dh-galeria-meta-note">{GALERIA_HERO_CONTENT.provisionalNotice}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Visual Asimétrico -->
+  <section class="dh-galeria-portfolio" aria-label="Selección visual de espacios en piedra">
+    <div class="container container-wide">
+      <div class="dh-galeria-grid">
+        {
+          items.map((item, index) => {
+            const hasVerifiedMeta = Boolean(item.title || item.location || item.material);
+            return (
+              <figure class:list={['dh-galeria-item', item.spanClass]}>
+                <div class="dh-galeria-media">
+                  <img
+                    src={item.image}
+                    alt={item.imageAlt}
+                    class:list={[
+                      'dh-galeria-img',
+                      item.spanClass === 'span-5-portrait-left' && 'pos-top-focus'
+                    ]}
+                    width={item.width}
+                    height={item.height}
+                    loading={index < 2 ? 'eager' : 'lazy'}
+                    fetchpriority={index === 0 ? 'high' : undefined}
+                    decoding="async"
+                  />
+                </div>
+
+                <figcaption class="dh-galeria-caption">
+                  <span class="dh-galeria-num">{item.num}</span>
+                  {hasVerifiedMeta ? (
+                    <div class="dh-galeria-verified-meta">
+                      {item.title && <span class="dh-galeria-item-title">{item.title}</span>}
+                      {(item.material || item.location) && (
+                        <span class="dh-galeria-item-sub">
+                          {[item.material, item.location].filter(Boolean).join(' · ')}
+                        </span>
+                      )}
+                    </div>
+                  ) : (
+                    <span class="dh-galeria-illustrative-tag">Imagen ilustrativa de referencia</span>
+                  )}
+                </figcaption>
+              </figure>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Cierre Editorial hacia WhatsApp -->
+  <section class="dh-galeria-cta" aria-labelledby="dh-galeria-cta-title">
+    <div class="container container-wide">
+      <div class="dh-galeria-cta-rule" aria-hidden="true"></div>
+
+      <div class="dh-galeria-cta-row">
+        <div class="dh-galeria-cta-copy">
+          <div class="dh-galeria-eyebrow-row dh-galeria-cta-eyebrow-row">
+            <span class="dh-galeria-rule-short" aria-hidden="true"></span>
+            <span class="dh-galeria-eyebrow">ASESORAMIENTO A MEDIDA</span>
+          </div>
+          <h2 class="dh-galeria-cta-title" id="dh-galeria-cta-title">
+            {GALERIA_CTA_CONTENT.title}
+          </h2>
+          <p class="dh-galeria-cta-desc">{GALERIA_CTA_CONTENT.description}</p>
+        </div>
+
+        <div class="dh-galeria-cta-action">
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-whatsapp-pill dh-galeria-wa-btn"
+          >
+            <svg
+              class="icon-whatsapp"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path
+                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+              ></path>
+            </svg>
+            <span>{GALERIA_CTA_CONTENT.buttonLabel}</span>
+            <span class="dh-galeria-btn-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  .dh-galeria-page {
+    background-color: #F9F8F5;
+    color: #1A1A1A;
+  }
+
+  .dh-galeria-page .container-wide {
+    max-width: 1440px;
+    padding-left: clamp(20px, 5vw, 72px);
+    padding-right: clamp(20px, 5vw, 72px);
+  }
+
+  .dh-galeria-rule-short {
+    display: block;
+    width: 42px;
+    height: 1.75px;
+    background-color: #773508;
+    flex-shrink: 0;
+  }
+
+  .dh-galeria-eyebrow-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .dh-galeria-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #1A1A1A;
+  }
+
+  /* HERO EDITORIAL COMPACTO */
+  .dh-galeria-hero {
+    padding-top: calc(var(--header-height, 90px) + 46px);
+    padding-bottom: 0;
+  }
+
+  .dh-galeria-hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.65rem, 5.1vw, 4.6rem);
+    font-weight: 500;
+    line-height: 1.03;
+    letter-spacing: -0.022em;
+    color: #1A1A1A;
+    margin: 0 0 22px 0;
+    max-width: 920px;
+  }
+
+  .dh-galeria-hero-desc {
+    font-family: var(--font-sans);
+    font-size: clamp(1.02rem, 1.35vw, 1.2rem);
+    font-weight: 400;
+    line-height: 1.56;
+    color: #2B2927;
+    margin: 0 0 38px 0;
+    max-width: 680px;
+  }
+
+  .dh-galeria-meta-bar {
+    width: 100%;
+    padding: 16px 0;
+    border-top: 1px solid rgba(26, 26, 26, 0.13);
+    border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+  }
+
+  .dh-galeria-meta-note {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-style: italic;
+    line-height: 1.5;
+    color: #686560;
+  }
+
+  /* PORTFOLIO VISUAL ASIMÉTRICO */
+  .dh-galeria-portfolio {
+    padding: clamp(36px, 4.2vw, 58px) 0 clamp(44px, 5vw, 72px);
+  }
+
+  .dh-galeria-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: clamp(22px, 2.4vw, 36px) clamp(20px, 2.1vw, 32px);
+    align-items: start;
+  }
+
+  .dh-galeria-item {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    min-width: 0;
+  }
+
+  .span-7-landscape,
+  .span-7-landscape-right {
+    grid-column: span 7;
+  }
+
+  .span-5-portrait,
+  .span-5-portrait-left {
+    grid-column: span 5;
+  }
+
+  .span-12-panoramic {
+    grid-column: 1 / -1;
+  }
+
+  .span-6-half {
+    grid-column: span 6;
+  }
+
+  .dh-galeria-media {
+    position: relative;
+    width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    background-color: #E8E4DC;
+  }
+
+  .span-7-landscape .dh-galeria-media,
+  .span-5-portrait .dh-galeria-media,
+  .span-5-portrait-left .dh-galeria-media,
+  .span-7-landscape-right .dh-galeria-media {
+    height: clamp(350px, 34vw, 495px);
+  }
+
+  .span-12-panoramic .dh-galeria-media {
+    height: clamp(360px, 38vw, 540px);
+  }
+
+  .span-6-half .dh-galeria-media {
+    height: clamp(320px, 30vw, 430px);
+  }
+
+  .dh-galeria-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dh-galeria-img.pos-top-focus {
+    object-position: center 16%;
+  }
+
+  .dh-galeria-item:hover .dh-galeria-img {
+    transform: scale(1.028);
+  }
+
+  .dh-galeria-caption {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.85rem;
+    padding-top: 0.7rem;
+  }
+
+  .dh-galeria-num {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: #773508;
+    flex-shrink: 0;
+  }
+
+  .dh-galeria-illustrative-tag {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    color: #686560;
+    text-align: right;
+  }
+
+  .dh-galeria-verified-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.85rem;
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  .dh-galeria-item-title {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: #1A1A1A;
+  }
+
+  .dh-galeria-item-sub {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    color: #686560;
+  }
+
+  /* CIERRE EDITORIAL CTA */
+  .dh-galeria-cta {
+    padding: 0 0 clamp(56px, 6vw, 84px);
+  }
+
+  .dh-galeria-cta-rule {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(26, 26, 26, 0.13);
+    margin-bottom: clamp(32px, 3.8vw, 52px);
+  }
+
+  .dh-galeria-cta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(24px, 4vw, 56px);
+  }
+
+  .dh-galeria-cta-eyebrow-row {
+    margin-bottom: 14px;
+  }
+
+  .dh-galeria-cta-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 3.2vw, 2.85rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: #1A1A1A;
+    margin: 0 0 12px 0;
+  }
+
+  .dh-galeria-cta-desc {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.55;
+    color: #3A3835;
+    margin: 0;
+    max-width: 540px;
+  }
+
+  .dh-galeria-cta-action {
+    flex-shrink: 0;
+  }
+
+  .dh-galeria-wa-btn {
+    padding: 0.85rem 1.85rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    background-color: #773508;
+    color: #FFFFFF;
+    white-space: nowrap;
+  }
+
+  .dh-galeria-wa-btn:hover {
+    background-color: #5D2906;
+  }
+
+  .dh-galeria-btn-arrow {
+    font-size: 1.05rem;
+    line-height: 1;
+    transition: transform var(--transition-fast);
+  }
+
+  .dh-galeria-wa-btn:hover .dh-galeria-btn-arrow {
+    transform: translateX(3px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dh-galeria-item:hover .dh-galeria-img {
+      transform: none;
+    }
+  }
+
+  /* TABLET & MÓVIL RESPONSIVE */
+  @media (max-width: 900px) {
+    .dh-galeria-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px 18px;
+    }
+
+    .span-7-landscape,
+    .span-5-portrait,
+    .span-5-portrait-left,
+    .span-7-landscape-right,
+    .span-6-half {
+      grid-column: span 1;
+    }
+
+    .span-12-panoramic {
+      grid-column: 1 / -1;
+    }
+
+    .span-7-landscape .dh-galeria-media,
+    .span-5-portrait .dh-galeria-media,
+    .span-5-portrait-left .dh-galeria-media,
+    .span-7-landscape-right .dh-galeria-media,
+    .span-6-half .dh-galeria-media {
+      height: auto;
+      aspect-ratio: 4 / 3;
+    }
+
+    .span-12-panoramic .dh-galeria-media {
+      height: auto;
+      aspect-ratio: 16 / 9;
+    }
+
+    .dh-galeria-cta-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .dh-galeria-hero {
+      padding-top: calc(var(--header-height, 68px) + 28px);
+    }
+
+    .dh-galeria-eyebrow-row {
+      margin-bottom: 16px;
+    }
+
+    .dh-galeria-hero-title {
+      font-size: 2.35rem;
+      line-height: 1.06;
+      margin-bottom: 16px;
+    }
+
+    .dh-galeria-hero-desc {
+      font-size: 0.95rem;
+      margin-bottom: 28px;
+    }
+
+    .dh-galeria-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .span-7-landscape .dh-galeria-media,
+    .span-7-landscape-right .dh-galeria-media,
+    .span-12-panoramic .dh-galeria-media,
+    .span-6-half .dh-galeria-media {
+      aspect-ratio: 4 / 3;
+    }
+
+    .span-5-portrait .dh-galeria-media,
+    .span-5-portrait-left .dh-galeria-media {
+      aspect-ratio: 4 / 4.4;
+    }
+
+    .dh-galeria-wa-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

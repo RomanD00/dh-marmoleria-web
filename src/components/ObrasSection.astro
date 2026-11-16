@@ -1,46 +1,105 @@
 ---
-import { OBRAS_DESTACADAS, type ObraItem } from '../data/obras';
+import { resolveGaleriaHref } from '../config/site';
+import { OBRAS_DESTACADAS, OBRAS_PROVISIONAL_NOTICE, type ObraItem } from '../data/obras';
 
 export interface Props {
   items?: ObraItem[];
 }
 
 const { items = OBRAS_DESTACADAS } = Astro.props;
+const [primaryObra, ...restObras] = items;
+const secondaryObras = restObras.slice(0, 2);
+const galeriaHref = resolveGaleriaHref('dark');
 ---
 
 <section class="obras-section" id="obras">
-  <div class="container obras-container">
-    <!-- Cabecera de Sección a la Izquierda -->
-    <div class="obras-intro">
-      <p class="section-tag">04. OBRAS DESTACADAS</p>
-      <h2 class="section-heading">
-        Espacios<br />
-        que hablan<br />
-        por nosotros.
-      </h2>
+  <div class="container container-wide obras-editorial-container">
+    <!-- Cabecera abierta alineada al margen editorial -->
+    <header class="obras-header">
+      <div class="obras-eyebrow-row">
+        <span class="obras-eyebrow-rule" aria-hidden="true"></span>
+        <p class="section-tag obras-eyebrow">OBRAS SELECCIONADAS</p>
+      </div>
+      <h2 class="section-heading obras-heading">Espacios que hablan por nosotros.</h2>
+    </header>
+
+    <!-- Composición fotográfica asimétrica: ancla grande izquierda + 2 láminas apiladas derecha -->
+    <div class="obras-asymmetric-grid">
+      {
+        primaryObra && (
+          <article class="obra-card obra-card-primary">
+            <figure class="obra-figure">
+              <div class="obra-media obra-media-primary">
+                <img
+                  src={primaryObra.image}
+                  alt={primaryObra.imageAlt}
+                  class="obra-img"
+                  width="960"
+                  height="535"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <figcaption class="obra-caption">
+                <span class="obra-index">01</span>
+                <span class="obra-caption-sep" aria-hidden="true">/</span>
+                <span class="obra-caption-title">{primaryObra.title}</span>
+              </figcaption>
+            </figure>
+          </article>
+        )
+      }
+
+      {
+        secondaryObras.length > 0 && (
+          <div class="obras-secondary-stack">
+            {secondaryObras.map((obra, idx) => (
+              <article class="obra-card obra-card-secondary">
+                <figure class="obra-figure">
+                  <div class="obra-media obra-media-secondary">
+                    <img
+                      src={obra.image}
+                      alt={obra.imageAlt}
+                      class="obra-img"
+                      width="927"
+                      height="600"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <figcaption class="obra-caption">
+                    <span class="obra-index">{`0${idx + 2}`}</span>
+                    <span class="obra-caption-sep" aria-hidden="true">/</span>
+                    <span class="obra-caption-title">{obra.title}</span>
+                  </figcaption>
+                </figure>
+              </article>
+            ))}
+          </div>
+        )
+      }
     </div>
 
-    <!-- Grid Horizontal de Proyectos -->
-    <div class="obras-grid">
-      {
-        items.map((obra) => (
-          <article class="obra-card">
-            <div class="obra-media">
-              <img
-                src={obra.image}
-                alt={obra.imageAlt}
-                class="obra-img"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            <div class="obra-info">
-              <h3 class="obra-title">{obra.title}</h3>
-              <p class="obra-specs">{obra.specs}</p>
-            </div>
-          </article>
-        ))
-      }
+    <!-- Pie editorial: aclaración discreta de imágenes ilustrativas + CTA hacia Galería -->
+    <div class="obras-footer-bar">
+      <p class="obras-provisional-note">{OBRAS_PROVISIONAL_NOTICE}</p>
+
+      <a href={galeriaHref} class="obras-cta-link">
+        <span>Ver todas las obras</span>
+        <svg
+          class="obras-cta-arrow"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.65"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
     </div>
   </div>
 </section>

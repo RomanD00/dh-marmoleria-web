@@ -1093,142 +1093,295 @@ ul, ol {
 }
 
 /* --------------------------------------------------------------------------
-   10. OBRAS DESTACADAS
+   10. OBRAS SELECCIONADAS (Composición Editorial Asimétrica)
    -------------------------------------------------------------------------- */
 .obras-section {
   background-color: var(--color-bg);
-  padding: 5.5rem 0 4.5rem;
+  padding: 5.75rem 0 5.25rem;
   position: relative;
-  background-image: url('/assets/textures/marble-vein-subtle.jpg');
-  background-repeat: no-repeat;
-  background-position: left 25%;
-  background-size: 120px auto;
 }
 
-.obras-container {
+.obras-editorial-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.obras-header {
+  max-width: 780px;
+  margin-bottom: clamp(28px, 3vw, 44px);
+}
+
+.obras-eyebrow-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 0.9rem;
+}
+
+.obras-eyebrow-rule {
+  display: block;
+  width: 36px;
+  height: 1.5px;
+  background-color: #773508;
+  flex-shrink: 0;
+}
+
+.obras-eyebrow {
+  margin-bottom: 0;
+  color: #773508;
+}
+
+.obras-heading {
+  font-size: clamp(2.3rem, 3.8vw, 3.25rem);
+  line-height: 1.07;
+  margin-bottom: 0;
+}
+
+.obras-asymmetric-grid {
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 3.5rem;
-  align-items: flex-start;
-}
-
-.obras-intro {
-  padding-top: 0.75rem;
-}
-
-.obras-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1.48fr) minmax(0, 1fr);
+  gap: clamp(20px, 2.2vw, 34px);
+  align-items: stretch;
 }
 
 .obra-card {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+}
+
+.obra-card-primary {
+  height: 100%;
+}
+
+.obra-figure {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  margin: 0;
+  min-height: 0;
 }
 
 .obra-media {
+  position: relative;
   width: 100%;
-  aspect-ratio: 16 / 11;
-  border-radius: 14px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  background-color: #E8E4DC;
+}
+
+.obra-media-primary {
+  flex: 1 1 auto;
+  min-height: 400px;
+}
+
+.obra-media-secondary {
+  aspect-ratio: 16 / 10;
+}
+
+.obras-secondary-stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(20px, 2.2vw, 32px);
+  min-width: 0;
 }
 
 .obra-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .obra-card:hover .obra-img {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
-.obra-info {
-  padding-top: 0.85rem;
+.obra-caption {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  padding-top: 0.75rem;
 }
 
-.obra-title {
+.obra-index {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #773508;
+}
+
+.obra-caption-sep {
+  font-size: 0.75rem;
+  color: rgba(20, 19, 18, 0.25);
+}
+
+.obra-caption-title {
   font-family: var(--font-serif);
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 500;
   color: var(--color-text-main);
   letter-spacing: -0.01em;
-  margin-bottom: 0.25rem;
 }
 
-.obra-specs {
-  font-size: 0.775rem;
-  color: var(--color-text-subtle);
+.obras-footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem 2.5rem;
+  margin-top: clamp(26px, 2.8vw, 40px);
+  padding-top: 1.35rem;
+  border-top: 1px solid rgba(20, 19, 18, 0.1);
+}
+
+.obras-provisional-note {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.obras-cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text-main);
+  padding-bottom: 4px;
+  border-bottom: 1.5px solid #773508;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.obras-cta-arrow {
+  width: 17px;
+  height: 17px;
+  transition: transform var(--transition-fast);
+}
+
+.obras-cta-link:hover {
+  color: #773508;
+}
+
+.obras-cta-link:hover .obras-cta-arrow {
+  transform: translateX(4px);
 }
 
 /* --------------------------------------------------------------------------
-   11. VIDA EN EL TALLER / INSTAGRAM (Carrusel Editorial)
+   11. EN INSTAGRAM / FEED DEL TALLER (Cabecera Horizontal + Carrusel Feed)
    -------------------------------------------------------------------------- */
 .taller-section {
-  background-color: var(--color-bg);
-  padding: 3.5rem 0 4.5rem;
+  background-color: #F2EFE9;
+  border-top: 1px solid rgba(20, 19, 18, 0.08);
+  border-bottom: 1px solid rgba(20, 19, 18, 0.08);
+  padding: 5rem 0 5.5rem;
   overflow-x: clip;
 }
 
 .taller-container {
-  display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
-  gap: 3.5rem;
-  align-items: center;
-}
-
-.taller-intro {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: clamp(26px, 2.8vw, 38px);
+}
+
+.taller-header-bar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.taller-header-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  max-width: 720px;
+}
+
+.taller-eyebrow-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.taller-eyebrow-rule {
+  display: block;
+  width: 36px;
+  height: 1.5px;
+  background-color: #773508;
+  flex-shrink: 0;
+}
+
+.taller-eyebrow {
+  margin-bottom: 0;
+  color: #773508;
+}
+
+.taller-heading-row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.35rem;
+}
+
+.taller-heading {
+  margin-bottom: 0;
 }
 
 .instagram-brand-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-  color: var(--color-text-main);
-  transition: color var(--transition-fast);
+  gap: 0.45rem;
+  color: #773508;
+  transition: color var(--transition-fast), opacity var(--transition-fast);
 }
 
 .instagram-brand-link:hover {
-  color: var(--color-bronze);
+  color: var(--color-text-main);
 }
 
 .icon-instagram {
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 .instagram-handle {
   font-family: var(--font-sans);
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
 .taller-desc {
-  font-size: 0.8125rem;
+  font-size: 0.9rem;
   line-height: 1.55;
   color: var(--color-text-muted);
+  margin: 0;
 }
 
 .taller-carousel-controls {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  margin-top: 0.85rem;
+  gap: 0.65rem;
+  flex-shrink: 0;
 }
 
 .taller-carousel-btn {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  border: 1px solid rgba(20, 19, 18, 0.18);
-  background-color: var(--color-bg-card);
+  border: 1px solid rgba(20, 19, 18, 0.2);
+  background-color: #F9F8F5;
   color: var(--color-text-main);
   display: inline-flex;
   align-items: center;
@@ -1249,8 +1402,8 @@ ul, ol {
 
 .taller-carousel-btn:hover:not(:disabled),
 .taller-carousel-btn:focus-visible:not(:disabled) {
-  background-color: var(--color-bronze);
-  border-color: var(--color-bronze);
+  background-color: #773508;
+  border-color: #773508;
   color: #FFFFFF;
 }
 
@@ -1273,8 +1426,8 @@ ul, ol {
 .taller-carousel-track {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: calc((100% - 3rem) / 4);
-  gap: 1rem;
+  grid-auto-columns: calc((100% - 3.75rem) / 4.25);
+  gap: 1.15rem;
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-x: contain;
@@ -1303,8 +1456,8 @@ ul, ol {
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 12px;
+  aspect-ratio: 4 / 5;
+  border-radius: 14px;
   overflow: hidden;
   background-color: #161513;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
@@ -1901,23 +2054,30 @@ a.legal-link:hover {
     gap: 2.5rem;
   }
 
-  .obras-container {
+  .obras-asymmetric-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
   }
 
-  .obras-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .obra-media-primary {
+    flex: none;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
   }
 
-  .taller-container {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2rem;
+  .obras-secondary-stack {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.35rem;
   }
 
   .taller-photos-grid,
   .taller-carousel-track {
-    grid-auto-columns: calc((100% - 2rem) / 3);
+    grid-auto-columns: calc((100% - 2.15rem) / 3.15);
+  }
+
+  .faq-section {
+    background-image: none;
   }
 
   .faq-container {
@@ -2033,13 +2193,34 @@ a.legal-link:hover {
     gap: 1.25rem;
   }
 
-  .obras-grid {
+  .obras-section {
+    padding: 4rem 0 3.75rem;
+  }
+
+  .obras-secondary-stack {
     grid-template-columns: 1fr;
+    gap: 1.35rem;
+  }
+
+  .obras-footer-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .taller-section {
+    padding: 3.75rem 0 4rem;
+  }
+
+  .taller-header-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.15rem;
   }
 
   .taller-photos-grid,
   .taller-carousel-track {
-    grid-auto-columns: calc((100% - 1rem) / 2.15);
+    grid-auto-columns: calc((100% - 1rem) / 2.2);
     gap: 0.875rem;
   }
 
@@ -2111,6 +2292,7 @@ a.legal-link:hover {
     scroll-behavior: auto !important;
   }
 
+  .obra-card:hover .obra-img,
   .taller-photo-item:hover .taller-img,
   .instagram-post-card:focus-visible .taller-img {
     transform: none !important;
@@ -2270,8 +2452,12 @@ a.legal-link:hover {
 
   .taller-photos-grid,
   .taller-carousel-track {
-    grid-auto-columns: calc((100% - 0.75rem) / 1.35);
+    grid-auto-columns: calc((100% - 0.75rem) / 1.38);
     gap: 0.75rem;
+  }
+
+  .obras-cta-link {
+    font-size: 0.875rem;
   }
 
   .taller-carousel-btn {

@@ -37,6 +37,10 @@ export default defineConfig({
               entrypoint: './src/pages-preview/preview-mesas.astro'
             });
             injectRoute({
+              pattern: '/preview-galeria',
+              entrypoint: './src/pages-preview/preview-galeria.astro'
+            });
+            injectRoute({
               pattern: '/preview-contacto',
               entrypoint: './src/pages-preview/preview-contacto.astro'
             });

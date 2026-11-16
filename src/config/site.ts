@@ -81,6 +81,13 @@ export const CATALOGS_PUBLISHED = false;
 export const CONTACT_PAGE_PUBLISHED = false;
 
 /**
+ * Controla si la página definitiva de Galería de Obras está publicada en producción.
+ * - false: En desarrollo / Vercel Preview apunta a `/preview-galeria`; en producción conserva `#obras`.
+ * - true:  Cuando se publique la página definitiva, apuntará a `/galeria`.
+ */
+export const GALERIA_PAGE_PUBLISHED = false;
+
+/**
  * Detecta si la compilación o servidor actual corre en entorno local / preview.
  */
 export function isPreviewEnvironment(): boolean {
@@ -138,18 +145,35 @@ export function resolveCatalogNavHref(item: NavSubItem, headerTheme: 'dark' | 'l
 
 /**
  * Resuelve el href de un ítem de primer nivel en el navbar o footer según el entorno:
- * 1. Si tiene ruta publicada y CONTACT_PAGE_PUBLISHED === true -> ruta definitiva (`/contacto`)
- * 2. Si tiene ruta preview y estamos en dev/preview local -> ruta preview (`/preview-contacto`)
- * 3. En producción mientras no esté publicado -> destino seguro (`#contacto` o `/#contacto`)
+ * 1. Si tiene ruta publicada habilitada según su flag -> ruta definitiva (`/galeria`, `/contacto`)
+ * 2. Si tiene ruta preview y estamos en dev/preview local -> ruta preview (`/preview-galeria`, `/preview-contacto`)
+ * 3. En producción mientras no esté publicado -> destino seguro (`#obras`/`/#obras` o `#contacto`/`/#contacto`)
  */
 export function resolveMainNavHref(item: NavItem, headerTheme: 'dark' | 'light' = 'dark'): string {
-  if (item.publishedHref && CONTACT_PAGE_PUBLISHED) {
+  const isPublished =
+    (item.publishedHref === '/contacto' && CONTACT_PAGE_PUBLISHED) ||
+    (item.publishedHref === '/galeria' && GALERIA_PAGE_PUBLISHED);
+
+  if (item.publishedHref && isPublished) {
     return item.publishedHref;
   }
   if (item.previewHref && isPreviewEnvironment()) {
     return item.previewHref;
   }
   return headerTheme === 'light' && item.href.startsWith('#') ? `/${item.href}` : item.href;
+}
+
+/**
+ * Resuelve el destino de Galería / "Ver todas las obras" según el entorno.
+ */
+export function resolveGaleriaHref(headerTheme: 'dark' | 'light' = 'dark'): string {
+  const galeriaItem = MAIN_NAV.find((item) => item.label === 'Galería');
+  if (galeriaItem) {
+    return resolveMainNavHref(galeriaItem, headerTheme);
+  }
+  if (GALERIA_PAGE_PUBLISHED) return '/galeria';
+  if (isPreviewEnvironment()) return '/preview-galeria';
+  return headerTheme === 'light' ? '/#obras' : '#obras';
 }
 
 /**
@@ -170,7 +194,9 @@ export const MAIN_NAV: NavItem[] = [
   },
   {
     label: 'Galería',
-    href: '#obras'
+    href: '#obras',
+    previewHref: '/preview-galeria',
+    publishedHref: '/galeria'
   },
   {
     label: 'Contacto',

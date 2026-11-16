@@ -21,30 +21,36 @@ export interface ObraItem {
   isProvisionalPhoto?: boolean;
 }
 
+export const OBRAS_PROVISIONAL_NOTICE =
+  'Imágenes ilustrativas. Las fotografías de obras realizadas se incorporarán próximamente.';
+
 export const OBRAS_DESTACADAS: ObraItem[] = [
   {
     id: 'cocina-residencial',
-    title: 'Cocina residencial',
-    specs: 'Mármol Calacatta | Isla con inglete a 45°',
-    image: '/assets/obras/01-cocina-residencial.jpg',
-    imageAlt: 'Cocina residencial con isla en Mármol Calacatta',
-    category: 'Cocinas e Islas'
+    title: 'Cocinas e islas centrales',
+    specs: 'Superficies continuas e integración a medida',
+    image: '/assets/hero/hero-obra-alternativa.jpg',
+    imageAlt: 'Imagen ilustrativa de cocina arquitectónica con isla central en piedra',
+    category: 'Cocinas e Islas',
+    isProvisionalPhoto: true
   },
   {
     id: 'bano-principal',
-    title: 'Baño principal',
-    specs: 'Cuarzo | Bacha integrada',
-    image: '/assets/obras/02-bano-principal.jpg',
-    imageAlt: 'Baño principal con mesada en Cuarzo y bacha integrada',
-    category: 'Baños y Vanitorys'
+    title: 'Mesadas y bachas integradas',
+    specs: 'Encuentros limpios y terminaciones a medida',
+    image: '/assets/materiales/02-cuarzo.jpg',
+    imageAlt: 'Imagen ilustrativa de mesada continua con bacha e iluminación natural',
+    category: 'Mesadas y Baños',
+    isProvisionalPhoto: true
   },
   {
     id: 'quincho-galeria',
-    title: 'Quincho y galería',
-    specs: 'Granito | Mesadas y revestimientos',
-    image: '/assets/obras/03-quincho-galeria.jpg',
-    imageAlt: 'Quincho y galería exterior con mesadas en Granito',
-    category: 'Quinchos y Exteriores'
+    title: 'Revestimientos y alzadas continuas',
+    specs: 'Vetas continuas y bloques arquitectónicos en piedra',
+    image: '/assets/materiales/04-marmol.jpg',
+    imageAlt: 'Imagen ilustrativa de revestimiento mural y mesada en piedra veteada',
+    category: 'Revestimientos',
+    isProvisionalPhoto: true
   }
 ];
 
@@ -52,26 +58,29 @@ export const GALERIA_COMPLETA: ObraItem[] = [
   ...OBRAS_DESTACADAS,
   {
     id: 'isla-calacatta-central',
-    title: 'Isla central y alzada continua',
-    specs: 'Mármol seleccionado | Faldón perimetral a 45°',
+    title: 'Espacios residenciales de gran escala',
+    specs: 'Imágenes ilustrativas de referencia arquitectónica',
     image: '/assets/hero/hero-obra-principal.jpg',
-    imageAlt: 'Cocina y gran isla central con inglete a 45° en mármol Calacatta realizada por Dodera Hermanos Marmolería',
-    category: 'Cocinas e Islas'
+    imageAlt: 'Imagen ilustrativa de ambiente de cocina con isla central en piedra',
+    category: 'Cocinas e Islas',
+    isProvisionalPhoto: true
   },
   {
     id: 'pileta-integrada-piedra',
-    title: 'Pileta armada en piedra natural',
-    specs: 'Mármol | Bacha monolítica con escurridor',
+    title: 'Piletas y mesadas monolíticas',
+    specs: 'Imágenes ilustrativas de referencia en taller',
     image: '/assets/catalogos/02-piletas.jpg',
-    imageAlt: 'Pileta y bacha armada e integrada en mármol con escurridor acanalado',
-    category: 'Piletas y Bachas'
+    imageAlt: 'Imagen ilustrativa de pileta y mesada continua en piedra',
+    category: 'Piletas y Bachas',
+    isProvisionalPhoto: true
   },
   {
     id: 'consola-recibidor-marmol',
-    title: 'Consola de recibidor a medida',
-    specs: 'Piedra natural + Base de hierro negro',
+    title: 'Mobiliario en piedra y hierro',
+    specs: 'Imágenes ilustrativas de piezas de apoyo a medida',
     image: '/assets/catalogos/03-mesas-arrime.jpg',
-    imageAlt: 'Mesa de arrime de diseño con tapa maciza de mármol y base de hierro negro',
-    category: 'Mobiliario'
+    imageAlt: 'Imagen ilustrativa de mesa de arrime con tapa de piedra y base metálica',
+    category: 'Mobiliario',
+    isProvisionalPhoto: true
   }
 ];

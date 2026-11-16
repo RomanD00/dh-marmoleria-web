@@ -1,0 +1,20 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import GaleriaPageContent from '../components/GaleriaPageContent.astro';
+---
+
+<MainLayout
+  title="Galería de Obras | Dodera Hermanos Marmolería"
+  description="Explorá nuestra selección visual de espacios, materiales y posibilidades de diseño en piedra."
+  canonicalPath="/preview-galeria"
+  ogImage="/assets/hero/hero-obra-alternativa.jpg"
+  headerTheme="light"
+  activeNav="Galería"
+  noIndex={true}
+  breadcrumbs={[
+    { name: 'Inicio', path: '/' },
+    { name: 'Galería', path: '/preview-galeria' }
+  ]}
+>
+  <GaleriaPageContent />
+</MainLayout>
